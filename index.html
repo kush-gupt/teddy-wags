@@ -4,13 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Teddy Wags — click a side, he wags that side</title>
-<meta name="description" content="Teddy the cockapoo wags his little docked tail on whichever side you click. Kate's idea.">
+<meta name="description" content="Teddy the cockapoo wags his tail on whichever side you click. Kate's idea.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{ --ink:#4a3826; }
   *{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ height:100%; }
   body{
@@ -56,36 +55,34 @@
     15%{ opacity:1; }
     100%{ transform:translate(-50%,-190%) scale(1.15) rotate(var(--spin,10deg)); opacity:0; }
   }
-  /* idle life */
   .eye{ transform-box:fill-box; transform-origin:center; animation:blink 4.8s infinite; }
   @keyframes blink{ 0%,91%,100%{ transform:scaleY(1);} 94%{ transform:scaleY(.08);} 97%{ transform:scaleY(1);} }
   #breath{ transform-box:fill-box; transform-origin:50% 100%; animation:breath 3.4s ease-in-out infinite alternate; }
   @keyframes breath{ from{ transform:scale(1,1);} to{ transform:scale(1.012,1.02);} }
-  /* happy state */
   #dogBounce{ transform-box:fill-box; transform-origin:50% 100%; }
   .happy #dogBounce{ animation:bounce .38s ease-in-out 5; }
-  @keyframes bounce{ 0%,100%{ transform:translateY(0);} 35%{ transform:translateY(-13px);} 70%{ transform:translateY(1px);} }
+  @keyframes bounce{ 0%,100%{ transform:translateY(0);} 35%{ transform:translateY(-10px);} 70%{ transform:translateY(1px);} }
   #head{ transform-box:fill-box; transform-origin:50% 88%; transition:transform .18s ease; }
-  .happy-tilt-l #head{ transform:rotate(-6deg); }
-  .happy-tilt-r #head{ transform:rotate(6deg); }
+  .happy-tilt-l #head{ transform:rotate(-5deg); }
+  .happy-tilt-r #head{ transform:rotate(5deg); }
   #tongue{ transform-box:fill-box; transform-origin:50% 0%; transform:scaleY(0); transition:transform .16s ease; }
   .happy #tongue{ transform:scaleY(1); }
   .earL,.earR{ transform-box:fill-box; }
   .earL{ transform-origin:85% 8%; } .earR{ transform-origin:15% 8%; }
   .happy .earL{ animation:earWigL .3s ease-in-out 6 alternate; }
   .happy .earR{ animation:earWigR .3s ease-in-out 6 alternate; }
-  @keyframes earWigL{ from{ transform:rotate(0);} to{ transform:rotate(-7deg);} }
-  @keyframes earWigR{ from{ transform:rotate(0);} to{ transform:rotate(7deg);} }
+  @keyframes earWigL{ from{ transform:rotate(0);} to{ transform:rotate(-5deg);} }
+  @keyframes earWigR{ from{ transform:rotate(0);} to{ transform:rotate(5deg);} }
 </style>
 </head>
 <body>
 <header>
   <h1><span class="paw">🐾</span> Teddy Wags</h1>
-  <p class="sub">Click the left side of Teddy, he wags left. Click the right side, he wags right.</p>
+  <p class="sub">Click the left side of Teddy, his tail wags over there. Click the right side, it wags over there.</p>
 </header>
 <div id="status" aria-live="polite">Go on, give Teddy a click.</div>
 
-<div id="stage" role="button" tabindex="0" aria-label="Play with Teddy. Activate the left side to make him wag left, the right side to wag right.">
+<div id="stage" role="button" tabindex="0" aria-label="Play with Teddy. Activate the left side to make his tail wag on the left, the right side to wag on the right.">
 <svg class="dog" viewBox="0 0 640 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <defs>
     <pattern id="hound" width="18" height="18" patternUnits="userSpaceOnUse">
@@ -100,106 +97,115 @@
     </radialGradient>
   </defs>
 
-  <ellipse cx="320" cy="530" rx="215" ry="34" fill="url(#floorG)"/>
-  <ellipse cx="320" cy="528" rx="168" ry="20" fill="#dfc493" opacity="0.55"/>
-
-  <!-- tails (behind body): fluffy docked pom-poms that swing out on their side -->
-  <g id="tailL" transform="rotate(14 238 440)">
-    <path d="M238 440 Q178 448 148 416" stroke="#f7e8cb" stroke-width="34" stroke-linecap="round" fill="none"/>
-    <circle cx="146" cy="414" r="27" fill="#f7e8cb" stroke="#e6cf9e" stroke-width="2.5"/>
-    <circle cx="128" cy="402" r="19" fill="#fdf3dd" stroke="#e6cf9e" stroke-width="2"/>
-    <circle cx="160" cy="394" r="16" fill="#fdf3dd" stroke="#e6cf9e" stroke-width="2"/>
-    <circle cx="136" cy="428" r="15" fill="#f1deb6" stroke="#e6cf9e" stroke-width="2"/>
-  </g>
-  <g id="tailR" transform="rotate(-14 402 440)">
-    <path d="M402 440 Q462 448 492 416" stroke="#f7e8cb" stroke-width="34" stroke-linecap="round" fill="none"/>
-    <circle cx="494" cy="414" r="27" fill="#f7e8cb" stroke="#e6cf9e" stroke-width="2.5"/>
-    <circle cx="512" cy="402" r="19" fill="#fdf3dd" stroke="#e6cf9e" stroke-width="2"/>
-    <circle cx="480" cy="394" r="16" fill="#fdf3dd" stroke="#e6cf9e" stroke-width="2"/>
-    <circle cx="504" cy="428" r="15" fill="#f1deb6" stroke="#e6cf9e" stroke-width="2"/>
-  </g>
+  <ellipse cx="320" cy="534" rx="212" ry="32" fill="url(#floorG)"/>
+  <ellipse cx="320" cy="532" rx="172" ry="19" fill="#dfc493" opacity="0.5"/>
 
   <g id="dogBounce">
   <g id="breath">
+    <!-- ONE tail: a fluffy plume curled beside his haunch. The wrapper flips it to the clicked side. -->
+    <g id="tailFlip">
+      <g id="tail" transform="rotate(6 418 470)">
+        <path d="M418 470 C478 488 526 480 547 444 C561 420 557 396 538 386" stroke="#f5e3c0" stroke-width="37" stroke-linecap="round" fill="none"/>
+        <circle cx="540" cy="380" r="26" fill="#f5e3c0"/>
+        <circle cx="519" cy="361" r="18" fill="#fdf3dd"/>
+        <circle cx="559" cy="361" r="15" fill="#fdf3dd"/>
+        <circle cx="558" cy="410" r="16" fill="#efdcb4"/>
+        <path d="M500 462 q14 6 30 2 M524 428 q12 -2 20 -12" stroke="#e6cf9e" stroke-width="4" stroke-linecap="round" fill="none"/>
+      </g>
+    </g>
+
     <!-- haunches + back paws -->
-    <ellipse cx="212" cy="442" rx="64" ry="80" fill="#f3e2c0"/>
-    <ellipse cx="428" cy="442" rx="64" ry="80" fill="#f3e2c0"/>
-    <ellipse cx="192" cy="522" rx="46" ry="17" fill="#f7e8cb"/>
-    <ellipse cx="448" cy="522" rx="46" ry="17" fill="#f7e8cb"/>
-    <path d="M178 512 v10 M196 510 v12" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M434 510 v12 M452 512 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
+    <ellipse cx="208" cy="446" rx="62" ry="76" fill="#f5e3c0"/>
+    <ellipse cx="432" cy="446" rx="62" ry="76" fill="#f5e3c0"/>
+    <ellipse cx="172" cy="520" rx="45" ry="16" fill="#f7e8cb" transform="rotate(-14 172 520)"/>
+    <ellipse cx="468" cy="520" rx="45" ry="16" fill="#f7e8cb" transform="rotate(14 468 520)"/>
+    <path d="M158 510 l6 9 M176 508 l4 10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M464 508 l-4 10 M482 510 l-6 9" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
+
     <!-- torso -->
-    <ellipse cx="320" cy="398" rx="108" ry="112" fill="#f7e8cb"/>
-    <ellipse cx="320" cy="428" rx="80" ry="76" fill="#fdf3dd" opacity="0.75"/>
-    <!-- front legs + paws -->
-    <path d="M272 430 v76" stroke="#f7e8cb" stroke-width="37" stroke-linecap="round"/>
-    <path d="M368 430 v76" stroke="#f7e8cb" stroke-width="37" stroke-linecap="round"/>
-    <ellipse cx="272" cy="516" rx="31" ry="15" fill="#fdf6e7"/>
-    <ellipse cx="368" cy="516" rx="31" ry="15" fill="#fdf6e7"/>
-    <path d="M262 507 v10 M282 507 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M358 507 v10 M378 507 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M320 262 C252 262 226 338 228 418 C230 484 268 522 320 522 C372 522 410 484 412 418 C414 338 388 262 320 262 Z" fill="#f5e3c0"/>
+    <!-- fluffy white chest bib -->
+    <path d="M320 356 C282 356 263 394 267 434 C270 469 293 494 320 494 C347 494 370 469 373 434 C377 394 358 356 320 356 Z" fill="#fffaf0" opacity="0.9"/>
+    <path d="M262 380 q-8 30 -2 58 M378 380 q8 30 2 58" stroke="#e9d5ab" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+    <!-- neck shadow -->
+    <ellipse cx="320" cy="278" rx="86" ry="17" fill="#dfc28c" opacity="0.45"/>
 
     <!-- blue houndstooth bandana -->
-    <path d="M232 296 Q320 338 408 296 L392 330 Q320 448 320 448 Q320 448 248 330 Z" fill="url(#hound)"/>
-    <path d="M232 296 Q320 338 408 296 L392 330 Q320 448 320 448 Q320 448 248 330 Z" fill="none" stroke="#2f4c7c" stroke-width="5" stroke-linejoin="round"/>
-    <g transform="rotate(18 384 330)">
-      <rect x="368" y="312" width="34" height="40" rx="9" fill="#41619b" stroke="#2f4c7c" stroke-width="4"/>
-      <path d="M376 352 l-4 34 M394 352 l6 32" stroke="#41619b" stroke-width="11" stroke-linecap="round"/>
+    <path d="M238 288 Q320 332 402 288 L388 322 Q320 442 320 442 Q320 442 252 322 Z" fill="url(#hound)"/>
+    <path d="M238 288 Q320 332 402 288 L388 322 Q320 442 320 442 Q320 442 252 322 Z" fill="none" stroke="#2f4c7c" stroke-width="5" stroke-linejoin="round"/>
+    <g transform="rotate(16 382 318)">
+      <rect x="366" y="300" width="33" height="38" rx="9" fill="#41619b" stroke="#2f4c7c" stroke-width="4"/>
+      <path d="M374 338 l-4 32 M392 338 l6 30" stroke="#41619b" stroke-width="11" stroke-linecap="round"/>
     </g>
+
+    <!-- front legs + paws -->
+    <path d="M283 402 v96" stroke="#f9edd4" stroke-width="36" stroke-linecap="round"/>
+    <path d="M357 402 v96" stroke="#f9edd4" stroke-width="36" stroke-linecap="round"/>
+    <ellipse cx="283" cy="514" rx="30" ry="14" fill="#fdf6e7"/>
+    <ellipse cx="357" cy="514" rx="30" ry="14" fill="#fdf6e7"/>
+    <path d="M273 505 v10 M293 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M347 505 v10 M367 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
 
     <!-- head -->
     <g id="head">
-      <!-- ears -->
+      <!-- ears: one drawn, one mirrored for symmetry -->
       <g class="earL">
-        <path d="M238 108 C196 116 182 168 190 226 C195 264 204 292 218 292 C234 292 240 258 242 214 C244 168 252 116 238 108 Z" fill="#eed9ae"/>
-        <path d="M226 140 C206 152 200 196 205 238" stroke="#e0c48f" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.8"/>
+        <path d="M248 94 C206 98 187 138 189 195 C190 240 197 284 212 298 C228 312 242 288 245 238 C248 196 260 148 264 120 C266 102 262 92 248 94 Z" fill="#ecd7ab"/>
+        <path d="M222 128 C206 148 201 190 205 236 C207 262 212 278 218 284" stroke="#dec188" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.85"/>
+        <path d="M196 250 q8 10 20 12 M200 272 q8 8 18 9" stroke="#dec188" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7"/>
       </g>
-      <g class="earR">
-        <path d="M402 108 C444 116 458 168 450 226 C445 264 436 292 422 292 C406 292 400 258 398 214 C396 168 388 116 402 108 Z" fill="#eed9ae"/>
-        <path d="M414 140 C434 152 440 196 435 238" stroke="#e0c48f" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.8"/>
+      <g transform="translate(640 0) scale(-1 1)">
+        <g class="earR">
+          <path d="M248 94 C206 98 187 138 189 195 C190 240 197 284 212 298 C228 312 242 288 245 238 C248 196 260 148 264 120 C266 102 262 92 248 94 Z" fill="#ecd7ab"/>
+          <path d="M222 128 C206 148 201 190 205 236 C207 262 212 278 218 284" stroke="#dec188" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.85"/>
+          <path d="M196 250 q8 10 20 12 M200 272 q8 8 18 9" stroke="#dec188" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7"/>
+        </g>
       </g>
-      <!-- fluffy head silhouette -->
-      <circle cx="320" cy="176" r="90" fill="#f7e8cb"/>
-      <circle cx="252" cy="212" r="44" fill="#f7e8cb"/>
-      <circle cx="388" cy="212" r="44" fill="#f7e8cb"/>
-      <circle cx="276" cy="100" r="34" fill="#f7e8cb"/>
-      <circle cx="320" cy="90" r="38" fill="#f7e8cb"/>
-      <circle cx="364" cy="100" r="34" fill="#f7e8cb"/>
-      <circle cx="320" cy="94" r="30" fill="#fdf3dd"/>
+      <!-- skull -->
+      <path d="M320 62 C384 62 420 108 418 168 C416 214 396 246 366 260 L274 260 C244 246 224 214 222 168 C220 108 256 62 320 62 Z" fill="#f5e3c0"/>
+      <!-- top tuft -->
+      <circle cx="282" cy="70" r="20" fill="#f5e3c0"/>
+      <circle cx="320" cy="58" r="24" fill="#f5e3c0"/>
+      <circle cx="358" cy="70" r="20" fill="#f5e3c0"/>
+      <ellipse cx="320" cy="106" rx="56" ry="30" fill="#fdf3dd" opacity="0.85"/>
+      <!-- cheek fluff -->
+      <circle cx="240" cy="228" r="17" fill="#f5e3c0"/>
+      <circle cx="400" cy="228" r="17" fill="#f5e3c0"/>
       <!-- brow tufts -->
-      <ellipse cx="272" cy="128" rx="25" ry="12" fill="#fff6e3" transform="rotate(-9 272 128)"/>
-      <ellipse cx="368" cy="128" rx="25" ry="12" fill="#fff6e3" transform="rotate(9 368 128)"/>
-      <!-- muzzle + beard -->
-      <ellipse cx="320" cy="216" rx="56" ry="42" fill="#fffaf0"/>
-      <circle cx="290" cy="246" r="17" fill="#fffaf0"/>
-      <circle cx="320" cy="252" r="19" fill="#fffaf0"/>
-      <circle cx="350" cy="246" r="17" fill="#fffaf0"/>
-      <!-- blush -->
-      <ellipse cx="238" cy="198" rx="15" ry="8" fill="#f2a48d" opacity="0.5"/>
-      <ellipse cx="402" cy="198" rx="15" ry="8" fill="#f2a48d" opacity="0.5"/>
+      <ellipse cx="272" cy="126" rx="21" ry="10" fill="#fff6e3" opacity="0.95" transform="rotate(-8 272 126)"/>
+      <ellipse cx="368" cy="126" rx="21" ry="10" fill="#fff6e3" opacity="0.95" transform="rotate(8 368 126)"/>
+      <!-- muzzle + mustache + beard -->
+      <ellipse cx="320" cy="218" rx="58" ry="43" fill="#fffaf0"/>
+      <ellipse cx="287" cy="224" rx="23" ry="14" fill="#fffaf0" transform="rotate(-14 287 224)"/>
+      <ellipse cx="353" cy="224" rx="23" ry="14" fill="#fffaf0" transform="rotate(14 353 224)"/>
+      <circle cx="291" cy="250" r="15" fill="#fffaf0"/>
+      <circle cx="320" cy="258" r="17" fill="#fffaf0"/>
+      <circle cx="349" cy="250" r="15" fill="#fffaf0"/>
       <!-- eyes -->
       <g class="eye">
-        <circle cx="274" cy="156" r="13.5" fill="#3a2a20"/>
-        <circle cx="269" cy="150" r="4.6" fill="#ffffff"/>
-        <circle cx="279" cy="161" r="2.2" fill="#ffffff" opacity="0.9"/>
+        <circle cx="272" cy="150" r="11.5" fill="#38271c"/>
+        <circle cx="268" cy="145" r="3.8" fill="#ffffff"/>
+        <circle cx="276" cy="154" r="1.8" fill="#ffffff" opacity="0.9"/>
       </g>
       <g class="eye">
-        <circle cx="366" cy="156" r="13.5" fill="#3a2a20"/>
-        <circle cx="361" cy="150" r="4.6" fill="#ffffff"/>
-        <circle cx="371" cy="161" r="2.2" fill="#ffffff" opacity="0.9"/>
+        <circle cx="368" cy="150" r="11.5" fill="#38271c"/>
+        <circle cx="364" cy="145" r="3.8" fill="#ffffff"/>
+        <circle cx="372" cy="154" r="1.8" fill="#ffffff" opacity="0.9"/>
       </g>
+      <path d="M254 138 Q272 129 290 138 M350 138 Q368 129 386 138" stroke="#e0c48f" stroke-width="5" stroke-linecap="round" fill="none"/>
       <!-- nose (click it for a boop) -->
       <g id="nose">
-        <ellipse cx="320" cy="196" rx="22" ry="16" fill="#6b4632"/>
-        <ellipse cx="312" cy="189" rx="7.5" ry="4.5" fill="#ffffff" opacity="0.5"/>
-        <circle cx="313" cy="199" r="2.6" fill="#4e3220"/>
-        <circle cx="327" cy="199" r="2.6" fill="#4e3220"/>
+        <ellipse cx="320" cy="194" rx="18" ry="13" fill="#62422e"/>
+        <ellipse cx="313" cy="188" rx="6" ry="3.6" fill="#ffffff" opacity="0.5"/>
+        <circle cx="314" cy="197" r="2.2" fill="#452c1c"/>
+        <circle cx="326" cy="197" r="2.2" fill="#452c1c"/>
       </g>
       <!-- mouth + tongue -->
-      <path d="M320 212 v7 M320 219 q-9 9 -19 4 M320 219 q9 9 19 4" stroke="#8a6a4d" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <path d="M320 207 v8 M320 215 q-10 10 -22 5 M320 215 q10 10 22 5" stroke="#8a6a4d" stroke-width="3.5" stroke-linecap="round" fill="none"/>
       <g id="tongue">
-        <path d="M306 226 h28 v16 q0 14 -14 14 q-14 0 -14 -14 Z" fill="#f28ba8"/>
-        <path d="M320 232 v16" stroke="#dd6d8f" stroke-width="3" stroke-linecap="round"/>
+        <path d="M307 224 h26 v15 q0 13 -13 13 q-13 0 -13 -13 Z" fill="#f28ba8"/>
+        <path d="M320 230 v14" stroke="#dd6d8f" stroke-width="3" stroke-linecap="round"/>
       </g>
     </g>
   </g>
@@ -211,48 +217,43 @@
 <div id="counter">Wags: 0</div>
 
 <footer>
-  <p><span class="idea">Kate's idea.</span> Built for Teddy, a very good cockapoo with a very waggy little tail.</p>
+  <p><span class="idea">Kate's idea.</span> Built for Teddy, a very good cockapoo with one very waggy tail.</p>
 </footer>
 
 <script>
 (function(){
   var stage = document.getElementById('stage');
-  var tailL = document.getElementById('tailL');
-  var tailR = document.getElementById('tailR');
+  var tailFlip = document.getElementById('tailFlip');
+  var tail = document.getElementById('tail');
   var status = document.getElementById('status');
   var counter = document.getElementById('counter');
   var wags = 0;
-  var wag = null; // {side, start}
+  var wag = null;
   var DURATION = 2000;
+  var REST = 6;
 
   var msgs = {
-    left:  ["Teddy wags left!", "Left-side wags, best wags.", "Wagging left for you!", "That left side never misses."],
-    right: ["Teddy wags right!", "Right-side wags, best wags.", "Wagging right for you!", "That right side never misses."],
+    left:  ["Teddy wags left!", "The tail swings left!", "Wagging left for you!", "Left side, full wag."],
+    right: ["Teddy wags right!", "The tail swings right!", "Wagging right for you!", "Right side, full wag."],
     boop:  ["Boop! Right on the nose.", "Boop achieved. Teddy approves.", "A perfect boop."]
   };
   function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
 
-  function setTail(el, angle, cx){
-    el.setAttribute('transform', 'rotate(' + angle.toFixed(2) + ' ' + cx + ' 440)');
+  function setTail(angle){
+    tail.setAttribute('transform', 'rotate(' + angle.toFixed(2) + ' 418 470)');
   }
 
   function frame(now){
     if(!wag) return;
     var t = (now - wag.start) / DURATION;
     if(t >= 1){
-      setTail(tailL, 14, 238); setTail(tailR, -14, 402);
+      setTail(REST);
       stage.classList.remove('happy','happy-tilt-l','happy-tilt-r');
       wag = null; return;
     }
     var env = Math.pow(1 - t, 0.55) * Math.min(1, t / 0.08 + 0.25);
-    var osc = Math.sin((now - wag.start) / 52) * 25 * env;
-    if(wag.side === 'left'){
-      setTail(tailL, -(16 + 13 * env) + osc, 238);
-      setTail(tailR, -14, 402);
-    } else {
-      setTail(tailR, (16 + 13 * env) - osc, 402);
-      setTail(tailL, 14, 238);
-    }
+    var angle = REST - 16 * env + Math.sin((now - wag.start) / 52) * 24 * env;
+    setTail(angle);
     requestAnimationFrame(frame);
   }
 
@@ -276,6 +277,7 @@
     wags++;
     counter.textContent = 'Wags: ' + wags;
     status.textContent = isBoop ? pick(msgs.boop) : pick(msgs[side]);
+    tailFlip.setAttribute('transform', side === 'left' ? 'translate(640 0) scale(-1 1)' : '');
     wag = { side: side, start: performance.now() };
     stage.classList.remove('happy-tilt-l','happy-tilt-r');
     void stage.offsetWidth;
@@ -287,7 +289,7 @@
   var lastPointerAt = 0;
   stage.addEventListener('pointerdown', function(e){
     var nowMs = performance.now();
-    if(nowMs - lastPointerAt < 120) return; // swallow synthetic double-fires
+    if(nowMs - lastPointerAt < 120) return;
     lastPointerAt = nowMs;
     var r = stage.getBoundingClientRect();
     var x = e.clientX - r.left, y = e.clientY - r.top;
