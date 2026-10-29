@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teddy Wags — click a side, he wags that side</title>
-<meta name="description" content="Teddy the cockapoo wags his tail on whichever side you click. Kate's idea.">
+<title>Teddy Wags — click a side, his booty swings that way</title>
+<meta name="description" content="Teddy the cockapoo swings his booty and wags his tail on whichever side you click. Kate's idea.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,9 +59,6 @@
   @keyframes blink{ 0%,91%,100%{ transform:scaleY(1);} 94%{ transform:scaleY(.08);} 97%{ transform:scaleY(1);} }
   #breath{ transform-box:fill-box; transform-origin:50% 100%; animation:breath 3.4s ease-in-out infinite alternate; }
   @keyframes breath{ from{ transform:scale(1,1);} to{ transform:scale(1.012,1.02);} }
-  #dogBounce{ transform-box:fill-box; transform-origin:50% 100%; }
-  .happy #dogBounce{ animation:bounce .38s ease-in-out 5; }
-  @keyframes bounce{ 0%,100%{ transform:translateY(0);} 35%{ transform:translateY(-10px);} 70%{ transform:translateY(1px);} }
   #head{ transform-box:fill-box; transform-origin:50% 88%; transition:transform .18s ease; transform:rotate(2deg); }
   .happy-tilt-l #head{ transform:rotate(-6deg); }
   .happy-tilt-r #head{ transform:rotate(6deg); }
@@ -71,20 +68,20 @@
   .happy #openSmile{ opacity:1; }
   .earL,.earR{ transform-box:fill-box; }
   .earL{ transform-origin:85% 8%; } .earR{ transform-origin:15% 8%; }
-  .happy .earL{ animation:earWigL .3s ease-in-out 6 alternate; }
-  .happy .earR{ animation:earWigR .3s ease-in-out 6 alternate; }
-  @keyframes earWigL{ from{ transform:rotate(0);} to{ transform:rotate(-5deg);} }
-  @keyframes earWigR{ from{ transform:rotate(0);} to{ transform:rotate(5deg);} }
+  .happy .earL{ animation:earWigL .34s ease-in-out 5 alternate; }
+  .happy .earR{ animation:earWigR .34s ease-in-out 5 alternate; }
+  @keyframes earWigL{ from{ transform:rotate(0);} to{ transform:rotate(-4deg);} }
+  @keyframes earWigR{ from{ transform:rotate(0);} to{ transform:rotate(4deg);} }
 </style>
 </head>
 <body>
 <header>
   <h1><span class="paw">🐾</span> Teddy Wags</h1>
-  <p class="sub">Click the left side of Teddy, his tail wags over there. Click the right side, it wags over there.</p>
+  <p class="sub">Click Teddy's left and his booty swings left. Click his right, it swings right.</p>
 </header>
 <div id="status" aria-live="polite">Go on, give Teddy a click.</div>
 
-<div id="stage" role="button" tabindex="0" aria-label="Play with Teddy. Activate the left side to make his tail wag on the left, the right side to wag on the right.">
+<div id="stage" role="button" tabindex="0" aria-label="Play with Teddy. Activate the left side to swing his booty left, the right side to swing it right.">
 <svg class="dog" viewBox="0 0 640 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <defs>
     <pattern id="hound" width="18" height="18" patternUnits="userSpaceOnUse">
@@ -97,100 +94,105 @@
       <stop offset="0%" stop-color="#e9cf9f"/>
       <stop offset="100%" stop-color="#e9cf9f" stop-opacity="0"/>
     </radialGradient>
+    <!-- shared userSpace gradients: overlapping pieces shade continuously, no seams -->
+    <linearGradient id="bodyGrad" gradientUnits="userSpaceOnUse" x1="320" y1="250" x2="320" y2="535">
+      <stop offset="0" stop-color="#f9ecce"/>
+      <stop offset="1" stop-color="#f0d9b0"/>
+    </linearGradient>
+    <radialGradient id="headGrad" gradientUnits="userSpaceOnUse" cx="320" cy="148" r="150">
+      <stop offset="0" stop-color="#fbf0d8"/>
+      <stop offset="1" stop-color="#f2ddb6"/>
+    </radialGradient>
+    <linearGradient id="earGrad" gradientUnits="userSpaceOnUse" x1="0" y1="90" x2="0" y2="300">
+      <stop offset="0" stop-color="#efdcae"/>
+      <stop offset="1" stop-color="#e0c28a"/>
+    </linearGradient>
+    <radialGradient id="muzzleGrad" gradientUnits="userSpaceOnUse" cx="320" cy="212" r="78">
+      <stop offset="0" stop-color="#fffdf6"/>
+      <stop offset="1" stop-color="#fbeed4"/>
+    </radialGradient>
+    <radialGradient id="bibGrad" gradientUnits="userSpaceOnUse" cx="320" cy="410" r="125">
+      <stop offset="0" stop-color="#fffdf6"/>
+      <stop offset="1" stop-color="#fdeed1"/>
+    </radialGradient>
   </defs>
 
   <ellipse cx="320" cy="534" rx="212" ry="32" fill="url(#floorG)"/>
   <ellipse cx="320" cy="532" rx="172" ry="19" fill="#dfc493" opacity="0.5"/>
 
-  <g id="dogBounce">
   <g id="breath">
-  <g id="booty">
-    <!-- ONE tail: a fluffy plume curled beside his haunch. The wrapper flips it to the clicked side. -->
-    <g id="tailFlip">
-      <g id="tail" transform="rotate(6 418 470)">
-        <path d="M418 470 C478 488 526 480 547 444 C561 420 557 396 538 386" stroke="#f5e3c0" stroke-width="37" stroke-linecap="round" fill="none"/>
-        <circle cx="540" cy="380" r="26" fill="#f5e3c0"/>
-        <circle cx="519" cy="361" r="18" fill="#fdf3dd"/>
-        <circle cx="559" cy="361" r="15" fill="#fdf3dd"/>
-        <circle cx="558" cy="410" r="16" fill="#efdcb4"/>
-        <path d="M500 462 q14 6 30 2 M524 428 q12 -2 20 -12" stroke="#e6cf9e" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <!-- REAR assembly: swings around the waist (320,330). Front end stays planted. -->
+    <g id="rear">
+      <g id="tailFlip">
+        <g id="tail" transform="rotate(6 418 470)">
+          <path d="M418 470 C478 488 526 480 547 444 C561 420 557 396 538 386" stroke="url(#bodyGrad)" stroke-width="37" stroke-linecap="round" fill="none"/>
+          <circle cx="540" cy="380" r="26" fill="url(#bodyGrad)"/>
+          <circle cx="519" cy="361" r="18" fill="url(#bodyGrad)"/>
+          <circle cx="559" cy="361" r="15" fill="url(#bodyGrad)"/>
+          <circle cx="558" cy="410" r="16" fill="url(#bodyGrad)"/>
+        </g>
       </g>
+      <path d="M320 292 C238 292 204 356 206 428 C208 492 258 530 320 530 C382 530 432 492 434 428 C436 356 402 292 320 292 Z" fill="url(#bodyGrad)"/>
+      <ellipse cx="224" cy="450" rx="44" ry="56" fill="#e8cf9e" opacity="0.35"/>
+      <ellipse cx="416" cy="450" rx="44" ry="56" fill="#e8cf9e" opacity="0.35"/>
+      <ellipse cx="168" cy="520" rx="45" ry="16" fill="#f9edd4" transform="rotate(-14 168 520)"/>
+      <ellipse cx="472" cy="520" rx="45" ry="16" fill="#f9edd4" transform="rotate(14 472 520)"/>
+      <path d="M158 510 l6 9 M176 508 l4 10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+      <path d="M464 508 l-4 10 M482 510 l-6 9" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
     </g>
 
-    <!-- haunches + back paws -->
-    <ellipse cx="208" cy="446" rx="62" ry="76" fill="#f5e3c0"/>
-    <ellipse cx="432" cy="446" rx="62" ry="76" fill="#f5e3c0"/>
-    <ellipse cx="172" cy="520" rx="45" ry="16" fill="#f7e8cb" transform="rotate(-14 172 520)"/>
-    <ellipse cx="468" cy="520" rx="45" ry="16" fill="#f7e8cb" transform="rotate(14 468 520)"/>
-    <path d="M158 510 l6 9 M176 508 l4 10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M464 508 l-4 10 M482 510 l-6 9" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
-
-    <!-- torso -->
-    <path d="M320 262 C252 262 226 338 228 418 C230 484 268 522 320 522 C372 522 410 484 412 418 C414 338 388 262 320 262 Z" fill="#f5e3c0"/>
-    <!-- fluffy white chest bib -->
-    <path d="M320 356 C282 356 263 394 267 434 C270 469 293 494 320 494 C347 494 370 469 373 434 C377 394 358 356 320 356 Z" fill="#fffaf0" opacity="0.9"/>
-    <path d="M262 380 q-8 30 -2 58 M378 380 q8 30 2 58" stroke="#e9d5ab" stroke-width="4" stroke-linecap="round" fill="none"/>
-
-    <!-- neck shadow -->
-    <ellipse cx="320" cy="278" rx="86" ry="17" fill="#dfc28c" opacity="0.45"/>
-
-    <!-- blue houndstooth bandana -->
-    <path d="M238 288 Q320 332 402 288 L388 322 Q320 442 320 442 Q320 442 252 322 Z" fill="url(#hound)"/>
-    <path d="M238 288 Q320 332 402 288 L388 322 Q320 442 320 442 Q320 442 252 322 Z" fill="none" stroke="#2f4c7c" stroke-width="5" stroke-linejoin="round"/>
-    <g transform="rotate(16 382 318)">
-      <rect x="366" y="300" width="33" height="38" rx="9" fill="#41619b" stroke="#2f4c7c" stroke-width="4"/>
-      <path d="M374 338 l-4 32 M392 338 l6 30" stroke="#41619b" stroke-width="11" stroke-linecap="round"/>
+    <!-- FRONT assembly: planted. Chest subgroup gets a tiny lagged counter-sway. -->
+    <g id="front">
+      <g id="chest">
+        <path d="M320 256 C256 256 230 326 233 402 C235 448 248 478 268 490 L372 490 C392 478 405 448 407 402 C410 326 384 256 320 256 Z" fill="url(#bodyGrad)"/>
+        <path d="M320 356 C282 356 263 394 267 434 C270 469 293 494 320 494 C347 494 370 469 373 434 C377 394 358 356 320 356 Z" fill="url(#bibGrad)" opacity="0.95"/>
+        <ellipse cx="320" cy="278" rx="86" ry="17" fill="#dfc28c" opacity="0.4"/>
+        <!-- blue houndstooth bandana -->
+        <path d="M238 288 Q320 332 402 288 L388 322 Q320 442 320 442 Q320 442 252 322 Z" fill="url(#hound)"/>
+        <path d="M238 288 Q320 332 402 288 L388 322 Q320 442 320 442 Q320 442 252 322 Z" fill="none" stroke="#2f4c7c" stroke-width="5" stroke-linejoin="round"/>
+        <g transform="rotate(16 382 318)">
+          <rect x="366" y="300" width="33" height="38" rx="9" fill="#41619b" stroke="#2f4c7c" stroke-width="4"/>
+          <path d="M374 338 l-4 32 M392 338 l6 30" stroke="#41619b" stroke-width="11" stroke-linecap="round"/>
+        </g>
+      </g>
+      <!-- front legs + paws: fully static, planted -->
+      <path d="M283 402 v96" stroke="#f9edd4" stroke-width="36" stroke-linecap="round"/>
+      <path d="M357 402 v96" stroke="#f9edd4" stroke-width="36" stroke-linecap="round"/>
+      <ellipse cx="283" cy="514" rx="30" ry="14" fill="#fdf6e7"/>
+      <ellipse cx="357" cy="514" rx="30" ry="14" fill="#fdf6e7"/>
+      <path d="M273 505 v10 M293 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+      <path d="M347 505 v10 M367 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
     </g>
 
-    <!-- front legs + paws -->
-    <path d="M283 402 v96" stroke="#f9edd4" stroke-width="36" stroke-linecap="round"/>
-    <path d="M357 402 v96" stroke="#f9edd4" stroke-width="36" stroke-linecap="round"/>
-    <ellipse cx="283" cy="514" rx="30" ry="14" fill="#fdf6e7"/>
-    <ellipse cx="357" cy="514" rx="30" ry="14" fill="#fdf6e7"/>
-    <path d="M273 505 v10 M293 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M347 505 v10 M367 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
-
-  </g>
-
-    <!-- head -->
+    <!-- HEAD -->
+    <g id="headSway">
     <g id="head">
-      <!-- ears: one drawn, one mirrored for symmetry -->
       <g class="earL">
-        <path d="M248 94 C206 98 187 138 189 195 C190 240 197 284 212 298 C228 312 242 288 245 238 C248 196 260 148 264 120 C266 102 262 92 248 94 Z" fill="#ecd7ab"/>
-        <path d="M233 118 C215 132 207 170 210 212 C212 242 217 260 223 266 C231 248 235 212 236 174 C237 146 237 126 233 118 Z" fill="#f9edd4" opacity="0.8"/>
-        <path d="M222 128 C206 148 201 190 205 236 C207 262 212 278 218 284" stroke="#dec188" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.85"/>
-        <path d="M196 250 q8 10 20 12 M200 272 q8 8 18 9" stroke="#dec188" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7"/>
+        <path d="M248 94 C206 98 187 138 189 195 C190 232 195 262 204 282 L212 268 L219 286 L227 268 L235 284 C241 262 244 232 245 196 C247 160 258 128 263 112 C266 100 260 92 248 94 Z" fill="url(#earGrad)"/>
+        <path d="M233 118 C215 132 207 170 210 212 C212 242 217 260 223 266 C231 248 235 212 236 174 C237 146 237 126 233 118 Z" fill="#f9edd4" opacity="0.75"/>
       </g>
       <g transform="translate(640 0) scale(-1 1)">
         <g class="earR">
-          <path d="M248 94 C206 98 187 138 189 195 C190 240 197 284 212 298 C228 312 242 288 245 238 C248 196 260 148 264 120 C266 102 262 92 248 94 Z" fill="#ecd7ab"/>
-          <path d="M233 118 C215 132 207 170 210 212 C212 242 217 260 223 266 C231 248 235 212 236 174 C237 146 237 126 233 118 Z" fill="#f9edd4" opacity="0.8"/>
-          <path d="M222 128 C206 148 201 190 205 236 C207 262 212 278 218 284" stroke="#dec188" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.85"/>
-          <path d="M196 250 q8 10 20 12 M200 272 q8 8 18 9" stroke="#dec188" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7"/>
+          <path d="M248 94 C206 98 187 138 189 195 C190 232 195 262 204 282 L212 268 L219 286 L227 268 L235 284 C241 262 244 232 245 196 C247 160 258 128 263 112 C266 100 260 92 248 94 Z" fill="url(#earGrad)"/>
+          <path d="M233 118 C215 132 207 170 210 212 C212 242 217 260 223 266 C231 248 235 212 236 174 C237 146 237 126 233 118 Z" fill="#f9edd4" opacity="0.75"/>
         </g>
       </g>
-      <!-- skull -->
-      <path d="M320 62 C384 62 420 108 418 168 C416 214 396 246 366 260 L274 260 C244 246 224 214 222 168 C220 108 256 62 320 62 Z" fill="#f5e3c0"/>
-      <!-- top tuft -->
-      <circle cx="282" cy="70" r="20" fill="#f5e3c0"/>
-      <circle cx="320" cy="58" r="24" fill="#f5e3c0"/>
-      <circle cx="358" cy="70" r="20" fill="#f5e3c0"/>
-      <ellipse cx="320" cy="106" rx="56" ry="30" fill="#fdf3dd" opacity="0.85"/>
-      <!-- cheek fluff -->
-      <circle cx="240" cy="228" r="20" fill="#f5e3c0"/>
-      <circle cx="400" cy="228" r="20" fill="#f5e3c0"/>
-      <ellipse cx="243" cy="205" rx="16" ry="9" fill="#f0b98a" opacity="0.35"/>
-      <ellipse cx="397" cy="205" rx="16" ry="9" fill="#f0b98a" opacity="0.35"/>
-      <!-- brow tufts -->
+      <!-- one-piece skull with the tuft in the silhouette -->
+      <path d="M274 260 C242 247 223 215 222 170 C221 128 240 92 274 74 C281 58 300 50 320 55 C340 50 359 58 366 74 C400 92 419 128 418 170 C417 215 398 247 366 260 Z" fill="url(#headGrad)"/>
+      <ellipse cx="320" cy="108" rx="54" ry="28" fill="#fdf3dd" opacity="0.8"/>
+      <circle cx="240" cy="228" r="20" fill="url(#headGrad)"/>
+      <circle cx="400" cy="228" r="20" fill="url(#headGrad)"/>
+      <ellipse cx="243" cy="205" rx="16" ry="9" fill="#f0b98a" opacity="0.3"/>
+      <ellipse cx="397" cy="205" rx="16" ry="9" fill="#f0b98a" opacity="0.3"/>
       <ellipse cx="272" cy="126" rx="21" ry="10" fill="#fff6e3" opacity="0.95" transform="rotate(-8 272 126)"/>
       <ellipse cx="368" cy="126" rx="21" ry="10" fill="#fff6e3" opacity="0.95" transform="rotate(8 368 126)"/>
-      <!-- muzzle + mustache + beard -->
-      <ellipse cx="320" cy="218" rx="58" ry="43" fill="#fffaf0"/>
-      <ellipse cx="287" cy="224" rx="23" ry="14" fill="#fffaf0" transform="rotate(-14 287 224)"/>
-      <ellipse cx="353" cy="224" rx="23" ry="14" fill="#fffaf0" transform="rotate(14 353 224)"/>
-      <circle cx="291" cy="250" r="15" fill="#fffaf0"/>
-      <circle cx="320" cy="258" r="17" fill="#fffaf0"/>
-      <circle cx="349" cy="250" r="15" fill="#fffaf0"/>
+      <!-- muzzle + mustache + beard, one shared gradient -->
+      <ellipse cx="320" cy="218" rx="58" ry="43" fill="url(#muzzleGrad)"/>
+      <ellipse cx="287" cy="224" rx="23" ry="14" fill="url(#muzzleGrad)" transform="rotate(-14 287 224)"/>
+      <ellipse cx="353" cy="224" rx="23" ry="14" fill="url(#muzzleGrad)" transform="rotate(14 353 224)"/>
+      <circle cx="291" cy="250" r="15" fill="url(#muzzleGrad)"/>
+      <circle cx="320" cy="258" r="17" fill="url(#muzzleGrad)"/>
+      <circle cx="349" cy="250" r="15" fill="url(#muzzleGrad)"/>
       <!-- eyes -->
       <g class="eye">
         <circle cx="272" cy="150" r="14" fill="#38271c"/>
@@ -202,7 +204,7 @@
         <circle cx="363" cy="144" r="5" fill="#ffffff"/>
         <circle cx="373" cy="155" r="2.4" fill="#ffffff" opacity="0.9"/>
       </g>
-      <path d="M254 138 Q272 129 290 138 M350 138 Q368 129 386 138" stroke="#e0c48f" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M254 138 Q272 129 290 138 M350 138 Q368 129 386 138" stroke="#e0c48f" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.8"/>
       <!-- nose (click it for a boop) -->
       <g id="nose">
         <ellipse cx="320" cy="194" rx="20" ry="14.5" fill="#62422e"/>
@@ -219,12 +221,12 @@
         <path d="M320 238 v12" stroke="#dd6d8f" stroke-width="3" stroke-linecap="round"/>
       </g>
     </g>
-  </g>
+    </g>
   </g>
 </svg>
 </div>
 
-<div class="hint"><span>← wag left</span><span>wag right →</span></div>
+<div class="hint"><span>← booty left</span><span>booty right →</span></div>
 <div id="counter">Wags: 0</div>
 
 <footer>
@@ -236,13 +238,15 @@
   var stage = document.getElementById('stage');
   var tailFlip = document.getElementById('tailFlip');
   var tail = document.getElementById('tail');
-  var booty = document.getElementById('booty');
+  var rear = document.getElementById('rear');
+  var chest = document.getElementById('chest');
+  var headSway = document.getElementById('headSway');
   var status = document.getElementById('status');
   var counter = document.getElementById('counter');
   var wags = 0;
   var wag = null;
-  var DURATION = 2000;
-  var REST = 6;
+  var DURATION = 2200;
+  var TAU = Math.PI * 2;
 
   var msgs = {
     left:  ["Booty swings left!", "Teddy wags left!", "Full wiggle, left side!", "That booty is swinging left."],
@@ -251,27 +255,34 @@
   };
   function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
 
-  function setTail(angle){
-    tail.setAttribute('transform', 'rotate(' + angle.toFixed(2) + ' 418 470)');
-  }
-
   function frame(now){
     if(!wag) return;
-    var t = (now - wag.start) / DURATION;
+    var e = now - wag.start;
+    var t = e / DURATION;
     if(t >= 1){
-      setTail(REST);
-      booty.setAttribute('transform', '');
+      tail.setAttribute('transform', 'rotate(6 418 470)');
+      rear.setAttribute('transform', '');
+      chest.setAttribute('transform', '');
+      headSway.setAttribute('transform', '');
       stage.classList.remove('happy','happy-tilt-l','happy-tilt-r');
       wag = null; return;
     }
-    var env = Math.pow(1 - t, 0.55) * Math.min(1, t / 0.08 + 0.25);
-    var angle = REST - 16 * env + Math.sin((now - wag.start) / 52) * 24 * env;
-    setTail(angle);
-    // the dramatic booty swing: whole rear end sways around the shoulders,
-    // biased hard toward the clicked side
+    // one smooth envelope for everything: no jerky starts or stops
+    var env = Math.pow(Math.sin(Math.PI * t), 1.3);
     var sign = wag.side === 'left' ? 1 : -1;
-    var bAngle = sign * env * (7 + 8.5 * Math.sin((now - wag.start) / 95));
-    booty.setAttribute('transform', 'rotate(' + bAngle.toFixed(2) + ' 320 300)');
+    // hips lead: rear sways around the waist, biased toward the clicked side
+    var hip = TAU * e / 460;
+    var rearAngle = sign * env * (4.5 + 7 * Math.sin(hip));
+    rear.setAttribute('transform', 'rotate(' + rearAngle.toFixed(2) + ' 320 330)');
+    // the tail rides the hips and wags at double frequency, lagging behind them
+    var tailAngle = 6 + env * (-9 + 17 * Math.sin(TAU * e / 230 - 0.9));
+    tail.setAttribute('transform', 'rotate(' + tailAngle.toFixed(2) + ' 418 470)');
+    // chest shimmy: tiny, opposite phase, lagged — the wave travelling up the body
+    var chestAngle = -sign * env * 2.1 * Math.sin(hip - 0.7);
+    chest.setAttribute('transform', 'rotate(' + chestAngle.toFixed(2) + ' 320 300)');
+    // head follows last, barely
+    var headAngle = sign * env * 1.7 * Math.sin(hip - 1.2);
+    headSway.setAttribute('transform', 'rotate(' + headAngle.toFixed(2) + ' 320 250)');
     requestAnimationFrame(frame);
   }
 
