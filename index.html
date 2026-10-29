@@ -60,8 +60,8 @@
   #breath{ transform-box:fill-box; transform-origin:50% 100%; animation:breath 3.4s ease-in-out infinite alternate; }
   @keyframes breath{ from{ transform:scale(1,1);} to{ transform:scale(1.012,1.02);} }
   #head{ transform-box:fill-box; transform-origin:50% 88%; transition:transform .18s ease; transform:rotate(2deg); }
-  .happy-tilt-l #head{ transform:rotate(-6deg); }
-  .happy-tilt-r #head{ transform:rotate(6deg); }
+  .happy-tilt-l #head{ transform:rotate(-4.5deg); }
+  .happy-tilt-r #head{ transform:rotate(4.5deg); }
   .mouthClosed{ transition:opacity .15s ease; }
   .happy .mouthClosed{ opacity:0; }
   #openSmile{ opacity:0; transition:opacity .15s ease; }
@@ -123,7 +123,7 @@
   <g id="breath">
     <!-- REAR assembly: swings around the waist (320,330). Front end stays planted. -->
     <g id="rear">
-      <g id="tailFlip">
+      <g id="tailWrap">
         <g id="tail" transform="rotate(6 418 470)">
           <path d="M418 470 C478 488 526 480 547 444 C561 420 557 396 538 386" stroke="url(#bodyGrad)" stroke-width="37" stroke-linecap="round" fill="none"/>
           <circle cx="540" cy="380" r="26" fill="url(#bodyGrad)"/>
@@ -167,6 +167,8 @@
     <!-- HEAD -->
     <g id="headSway">
     <g id="head">
+      <!-- neck ruff: grows the head into the chest so they read as one dog -->
+      <path d="M320 232 C262 232 234 258 237 292 C239 316 260 330 284 325 L291 343 L305 330 L320 346 L335 330 L349 343 L356 325 C380 330 401 316 403 292 C406 258 378 232 320 232 Z" fill="url(#bodyGrad)"/>
       <g class="earL">
         <path d="M248 94 C206 98 187 138 189 195 C190 232 195 262 204 282 L212 268 L219 286 L227 268 L235 284 C241 262 244 232 245 196 C247 160 258 128 263 112 C266 100 260 92 248 94 Z" fill="url(#earGrad)"/>
         <path d="M233 118 C215 132 207 170 210 212 C212 242 217 260 223 266 C231 248 235 212 236 174 C237 146 237 126 233 118 Z" fill="#f9edd4" opacity="0.75"/>
@@ -178,7 +180,7 @@
         </g>
       </g>
       <!-- one-piece skull with the tuft in the silhouette -->
-      <path d="M274 260 C242 247 223 215 222 170 C221 128 240 92 274 74 C281 58 300 50 320 55 C340 50 359 58 366 74 C400 92 419 128 418 170 C417 215 398 247 366 260 Z" fill="url(#headGrad)"/>
+      <path d="M274 274 C242 254 223 215 222 170 C221 128 240 92 274 74 C281 58 300 50 320 55 C340 50 359 58 366 74 C400 92 419 128 418 170 C417 215 398 254 366 274 Z" fill="url(#headGrad)"/>
       <ellipse cx="320" cy="108" rx="54" ry="28" fill="#fdf3dd" opacity="0.8"/>
       <circle cx="240" cy="228" r="20" fill="url(#headGrad)"/>
       <circle cx="400" cy="228" r="20" fill="url(#headGrad)"/>
@@ -190,9 +192,9 @@
       <ellipse cx="320" cy="218" rx="58" ry="43" fill="url(#muzzleGrad)"/>
       <ellipse cx="287" cy="224" rx="23" ry="14" fill="url(#muzzleGrad)" transform="rotate(-14 287 224)"/>
       <ellipse cx="353" cy="224" rx="23" ry="14" fill="url(#muzzleGrad)" transform="rotate(14 353 224)"/>
-      <circle cx="291" cy="250" r="15" fill="url(#muzzleGrad)"/>
-      <circle cx="320" cy="258" r="17" fill="url(#muzzleGrad)"/>
-      <circle cx="349" cy="250" r="15" fill="url(#muzzleGrad)"/>
+      <circle cx="291" cy="256" r="15" fill="url(#muzzleGrad)"/>
+      <circle cx="320" cy="265" r="18" fill="url(#muzzleGrad)"/>
+      <circle cx="349" cy="256" r="15" fill="url(#muzzleGrad)"/>
       <!-- eyes -->
       <g class="eye">
         <circle cx="272" cy="150" r="14" fill="#38271c"/>
@@ -236,7 +238,7 @@
 <script>
 (function(){
   var stage = document.getElementById('stage');
-  var tailFlip = document.getElementById('tailFlip');
+  var tailWrap = document.getElementById('tailWrap');
   var tail = document.getElementById('tail');
   var rear = document.getElementById('rear');
   var chest = document.getElementById('chest');
@@ -244,9 +246,13 @@
   var status = document.getElementById('status');
   var counter = document.getElementById('counter');
   var wags = 0;
-  var wag = null;
-  var DURATION = 2200;
   var TAU = Math.PI * 2;
+  // Continuous wag simulation: the phase never resets and every part eases
+  // toward its target, so switching sides mid-wag glides instead of snapping.
+  // targetSide is the lean target: +1 = booty left, -1 = booty right.
+  // The tail target is the opposite sign (scaleX +1 draws it on the right).
+  var phase = 0, amp = 0, lean = 0, tailSide = 1;
+  var targetSide = -1, excitedUntil = 0, lastFrame = 0, loopRunning = false;
 
   var msgs = {
     left:  ["Booty swings left!", "Teddy wags left!", "Full wiggle, left side!", "That booty is swinging left."],
@@ -256,34 +262,51 @@
   function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
 
   function frame(now){
-    if(!wag) return;
-    var e = now - wag.start;
-    var t = e / DURATION;
-    if(t >= 1){
-      tail.setAttribute('transform', 'rotate(6 418 470)');
+    var dt = Math.min(64, now - (lastFrame || now));
+    lastFrame = now;
+    var excited = now < excitedUntil;
+    var ampTarget = excited ? 1 : 0;
+    var tau = ampTarget > amp ? 90 : 480;
+    amp += (ampTarget - amp) * (1 - Math.exp(-dt / tau));
+    if(!excited && amp < 0.003) amp = 0;
+    lean += (targetSide - lean) * (1 - Math.exp(-dt / 170));
+    tailSide += ((-targetSide) - tailSide) * (1 - Math.exp(-dt / 150));
+    phase += dt * TAU / 460;
+
+    var rearAngle = amp * (lean * 5 + 7 * Math.sin(phase));
+    rear.setAttribute('transform', rearAngle ? 'rotate(' + rearAngle.toFixed(2) + ' 320 330)' : '');
+    var tailAngle = 6 + amp * (-9 + 17 * Math.sin(2 * phase - 0.9));
+    tail.setAttribute('transform', 'rotate(' + tailAngle.toFixed(2) + ' 418 470)');
+    // easing scaleX through 0 swings the tail behind his body to the other side
+    tailWrap.setAttribute('transform', 'translate(320 0) scale(' + tailSide.toFixed(3) + ' 1) translate(-320 0)');
+    var chestAngle = -amp * 2.1 * Math.sin(phase - 0.7);
+    chest.setAttribute('transform', chestAngle ? 'rotate(' + chestAngle.toFixed(2) + ' 320 300)' : '');
+    var headAngle = amp * 1.2 * Math.sin(phase - 1.2);
+    headSway.setAttribute('transform', headAngle ? 'rotate(' + headAngle.toFixed(2) + ' 320 250)' : '');
+
+    if(amp > 0.12 || excited){
+      if(!stage.classList.contains('happy')){
+        stage.classList.add('happy', targetSide > 0 ? 'happy-tilt-l' : 'happy-tilt-r');
+      }
+    } else {
+      stage.classList.remove('happy','happy-tilt-l','happy-tilt-r');
+    }
+
+    var settled = !excited && amp === 0 &&
+      Math.abs(lean - targetSide) < 0.002 && Math.abs(tailSide + targetSide) < 0.002;
+    if(!settled){
+      requestAnimationFrame(frame);
+    } else {
+      loopRunning = false;
       rear.setAttribute('transform', '');
       chest.setAttribute('transform', '');
       headSway.setAttribute('transform', '');
-      stage.classList.remove('happy','happy-tilt-l','happy-tilt-r');
-      wag = null; return;
+      tail.setAttribute('transform', 'rotate(6 418 470)');
     }
-    // one smooth envelope for everything: no jerky starts or stops
-    var env = Math.pow(Math.sin(Math.PI * t), 1.3);
-    var sign = wag.side === 'left' ? 1 : -1;
-    // hips lead: rear sways around the waist, biased toward the clicked side
-    var hip = TAU * e / 460;
-    var rearAngle = sign * env * (4.5 + 7 * Math.sin(hip));
-    rear.setAttribute('transform', 'rotate(' + rearAngle.toFixed(2) + ' 320 330)');
-    // the tail rides the hips and wags at double frequency, lagging behind them
-    var tailAngle = 6 + env * (-9 + 17 * Math.sin(TAU * e / 230 - 0.9));
-    tail.setAttribute('transform', 'rotate(' + tailAngle.toFixed(2) + ' 418 470)');
-    // chest shimmy: tiny, opposite phase, lagged — the wave travelling up the body
-    var chestAngle = -sign * env * 2.1 * Math.sin(hip - 0.7);
-    chest.setAttribute('transform', 'rotate(' + chestAngle.toFixed(2) + ' 320 300)');
-    // head follows last, barely
-    var headAngle = sign * env * 1.7 * Math.sin(hip - 1.2);
-    headSway.setAttribute('transform', 'rotate(' + headAngle.toFixed(2) + ' 320 250)');
-    requestAnimationFrame(frame);
+  }
+
+  function startLoop(){
+    if(!loopRunning){ loopRunning = true; lastFrame = 0; requestAnimationFrame(frame); }
   }
 
   function hearts(x, y, n){
@@ -306,13 +329,12 @@
     wags++;
     counter.textContent = 'Wags: ' + wags;
     status.textContent = isBoop ? pick(msgs.boop) : pick(msgs[side]);
-    tailFlip.setAttribute('transform', side === 'left' ? 'translate(640 0) scale(-1 1)' : '');
-    wag = { side: side, start: performance.now() };
+    targetSide = side === 'left' ? 1 : -1;
+    excitedUntil = performance.now() + 2100;
     stage.classList.remove('happy-tilt-l','happy-tilt-r');
-    void stage.offsetWidth;
     stage.classList.add('happy', side === 'left' ? 'happy-tilt-l' : 'happy-tilt-r');
     hearts(x, y, isBoop ? 7 : 5);
-    requestAnimationFrame(frame);
+    startLoop();
   }
 
   var lastPointerAt = 0;
