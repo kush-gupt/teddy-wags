@@ -3,7 +3,7 @@
 **Kate's idea.**
 
 A tiny website starring Teddy, a very good cockapoo. Click (or tap) the left
-side of Teddy and his little docked tail wags on the left. Click the right
+side of Teddy and his tail wags on the left. Click the right
 side and he wags on the right. Clicking his nose earns a boop.
 
 Teddy wears his signature blue houndstooth bandana and takes his wagging
