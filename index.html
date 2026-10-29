@@ -110,9 +110,15 @@
 
       <ellipse cx="320" cy="534" rx="228" ry="23" fill="#8a6134" opacity=".14"/>
 
-      <!-- REAR: back, big round rump, back legs, pom tail. It SHIFTS side to
+      <!-- REAR: back, big round rump, back legs, plume tail. It SHIFTS side to
            side across center while the front end stays planted. -->
       <g id="rear">
+        <!-- golden retriever plume tail: long, feathered, flowing off the rump -->
+        <g id="tail">
+          <path d="M548 288 C580 278 610 250 620 210 C626 186 620 162 602 156 C588 151 578 164 580 180 C584 202 578 224 564 240 C576 246 576 262 564 268 C576 276 570 292 554 292 C562 302 548 306 540 296 Z" fill="url(#tailGrad)" stroke="rgba(186,146,88,.45)" stroke-width="1.5"/>
+          <path d="M566 268 C590 250 604 224 606 196" fill="none" stroke="#e2c184" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+          <path d="M556 282 C574 268 586 246 590 220" fill="none" stroke="#e2c184" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+        </g>
         <!-- far back leg -->
         <path d="M506 378 L546 378 L544 490 Q544 512 523 512 Q503 512 504 490 Z" fill="#e9d09c"/>
         <ellipse cx="524" cy="515" rx="25" ry="12" fill="#f3e3c0"/>
@@ -124,16 +130,6 @@
         <path d="M442 394 C438 434 440 470 442 494 Q443 514 464 514 Q485 514 484 494 L483 396 C471 410 453 410 442 394 Z" fill="url(#bodyGrad)"/>
         <ellipse cx="463" cy="517" rx="27" ry="13" fill="#f8ecd4"/>
         <path d="M452 511 v6 M464 513 v6 M476 511 v6" stroke="#dcc08c" stroke-width="2" stroke-linecap="round"/>
-        <!-- docked pom tail on top of the rump, like the real Ted -->
-        <g id="tail">
-          <path d="M486 226 Q492 196 506 186" fill="none" stroke="#ecd7a8" stroke-width="17" stroke-linecap="round"/>
-          <g fill="url(#tailGrad)" stroke="rgba(186,146,88,.45)" stroke-width="1.5">
-            <circle cx="512" cy="172" r="23"/>
-            <circle cx="492" cy="189" r="18"/>
-            <circle cx="531" cy="189" r="16"/>
-            <circle cx="510" cy="155" r="15"/>
-          </g>
-        </g>
       </g>
 
       <!-- MID: fluff patch over the waist that slides at half the rear's
@@ -287,9 +283,9 @@
       'translate(' + dx.toFixed(2) + ' ' + dy.toFixed(2) + ') rotate(' + rearRot.toFixed(2) + ' 330 320)');
     // waist patch slides at half rate — the spine bends, it doesn't hinge
     mid.setAttribute('transform', 'translate(' + (dx * 0.5).toFixed(2) + ' 0)');
-    // docked pom wags on top of the moving rump
-    var tailAngle = 6 + amp * (-10 + 17 * Math.sin(2 * phase - 0.9));
-    tail.setAttribute('transform', 'rotate(' + tailAngle.toFixed(2) + ' 495 218)');
+    // plume tail streams off the rump and sways as he shifts
+    var tailAngle = amp * (-8 + 14 * Math.sin(2 * phase - 0.9));
+    tail.setAttribute('transform', 'rotate(' + tailAngle.toFixed(2) + ' 548 262)');
     // chest shimmy: tiny, opposite, lagged — front stays planted
     var chestAngle = -amp * 1.8 * Math.sin(phase - 0.7);
     chest.setAttribute('transform', chestAngle ? 'rotate(' + chestAngle.toFixed(2) + ' 296 320)' : '');
@@ -314,7 +310,7 @@
       mid.setAttribute('transform', '');
       chest.setAttribute('transform', '');
       headSway.setAttribute('transform', '');
-      tail.setAttribute('transform', 'rotate(6 495 218)');
+      tail.setAttribute('transform', '');
     }
   }
 
