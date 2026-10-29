@@ -3,267 +3,262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teddy Wags — click a side, watch the booty shift</title>
-<meta name="description" content="Teddy the cockapoo wiggles his whole rear end toward whichever side you click. Kate's idea.">
+<title>Teddy Wags — click a side, his booty swings that way</title>
+<meta name="description" content="Teddy the cockapoo swings his booty and wags his tail on whichever side you click. Kate's idea.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html, body { height:100%; }
-  body {
-    font-family:'Baloo 2', ui-rounded, system-ui, sans-serif;
-    background:linear-gradient(180deg, #fdf3e0 0%, #fbe8cd 55%, #f7ddba 100%);
-    color:#5b4632;
+  *{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; }
+  body{
+    font-family:"Baloo 2", ui-rounded, "Comic Sans MS", "Chalkboard SE", system-ui, sans-serif;
+    background:linear-gradient(180deg,#fff6e2 0%,#ffecca 55%,#ffe3ae 100%);
+    color:#4a3826;
     display:flex; flex-direction:column; align-items:center;
-    min-height:100vh; padding:24px 12px 16px;
-    -webkit-tap-highlight-color:transparent;
+    min-height:100vh; overflow-x:hidden;
+    user-select:none; -webkit-user-select:none;
   }
-  h1 { font-size:clamp(30px, 6vw, 46px); font-weight:800; letter-spacing:.5px; color:#7a4b21; }
-  h1 .paw { color:#d98a3d; }
-  #status { font-size:clamp(17px, 3.4vw, 22px); font-weight:700; color:#96682f; min-height:1.5em; margin-top:2px; text-align:center; }
-  #counter {
-    margin-top:8px; background:#fffdf7; border:2px solid #e8c98f; color:#96682f;
-    font-weight:800; font-size:16px; padding:4px 16px; border-radius:999px;
-    box-shadow:0 2px 0 #e8c98f; visibility:hidden;
+  header{ text-align:center; padding:26px 16px 4px; }
+  h1{ font-size:clamp(2rem,6vw,3.2rem); font-weight:800; letter-spacing:.5px; color:#5b4028; }
+  h1 .paw{ display:inline-block; transform:rotate(-12deg); }
+  .sub{ font-size:clamp(1rem,3vw,1.25rem); font-weight:600; color:#8a6a45; margin-top:2px; }
+  #status{
+    margin-top:14px; min-height:2.2em; font-size:clamp(1.15rem,3.6vw,1.6rem);
+    font-weight:800; color:#b45a1b; text-align:center; padding:0 12px;
   }
-  #stage {
-    position:relative; width:min(92vw, 560px); margin-top:6px;
-    cursor:pointer; touch-action:manipulation; user-select:none; -webkit-user-select:none;
-    outline:none;
+  #stage{
+    position:relative; width:min(92vw,560px); aspect-ratio:640/600;
+    cursor:pointer; touch-action:manipulation; outline:none;
+    border-radius:28px;
   }
-  #stage:focus-visible { filter:drop-shadow(0 0 10px rgba(217,138,61,.55)); border-radius:24px; }
-  svg.dog { width:100%; height:auto; display:block; overflow:visible; }
-
-  #breath { transform-box:fill-box; transform-origin:50% 60%; animation:breathe 3.6s ease-in-out infinite; }
-  @keyframes breathe { 0%,100% { transform:scale(1,1); } 50% { transform:scale(1.012,1.02); } }
-
-  .eye { transform-box:fill-box; transform-origin:center; animation:blink 4.6s infinite; }
-  @keyframes blink { 0%, 92%, 100% { transform:scaleY(1); } 95% { transform:scaleY(.08); } }
-
-  #head { transform-box:fill-box; transform-origin:50% 88%; transform:rotate(0deg); transition:transform .25s ease; }
-  .happy-tilt-l #head{ transform:rotate(-4deg); }
-  .happy-tilt-r #head{ transform:rotate(4deg); }
-
-  .earL, .earR { transform-box:fill-box; }
-  .earL { transform-origin:70% 6%; }
-  .earR { transform-origin:30% 6%; }
-  .happy .earL { animation:earWiggleL .46s ease-in-out infinite; }
-  .happy .earR { animation:earWiggleR .46s ease-in-out infinite .08s; }
-  @keyframes earWiggleL { 0%,100% { transform:rotate(0deg); } 50% { transform:rotate(-6deg); } }
-  @keyframes earWiggleR { 0%,100% { transform:rotate(0deg); } 50% { transform:rotate(6deg); } }
-
-  .grin, .tongue { opacity:0; transition:opacity .18s ease; }
-  .happy .grin, .happy .tongue { opacity:1; }
-  .happy .smile { opacity:0; }
-  .smile { transition:opacity .18s ease; }
-  .happy .eye { animation:none; transform:scale(1.15); }
-  .brow { opacity:0; transition:opacity .18s ease; }
-  .happy .brow { opacity:1; }
-
-  .heart { position:absolute; pointer-events:none; animation:floatUp 1.15s ease-out forwards; z-index:5; line-height:1; }
-  @keyframes floatUp {
-    0% { transform:translate(-50%,-50%) scale(.5) rotate(0deg); opacity:0; }
-    15% { opacity:1; }
-    100% { transform:translate(calc(-50% + var(--dx)), calc(-50% - 120px)) scale(1.15) rotate(var(--rot)); opacity:0; }
+  #stage:focus-visible{ box-shadow:0 0 0 4px #e8a54b; }
+  #stage svg.dog{ width:100%; height:100%; display:block; overflow:visible; }
+  .hint{
+    display:flex; justify-content:space-between; width:min(92vw,560px);
+    padding:2px 10px 0; font-weight:700; color:#a07a4e; font-size:clamp(.9rem,2.8vw,1.05rem);
   }
-  .hint { margin-top:10px; font-size:15px; font-weight:600; color:#b0824a; text-align:center; }
-  footer { margin-top:auto; padding-top:14px; font-size:13.5px; color:#bfa07a; font-weight:600; text-align:center; }
+  #counter{
+    margin-top:10px; background:#fffdf7; border:3px solid #f0d9ae; color:#7a5a33;
+    font-weight:800; font-size:1.05rem; padding:6px 18px; border-radius:999px;
+    box-shadow:0 3px 0 #ecd7ab;
+  }
+  footer{ margin-top:auto; padding:22px 16px 26px; text-align:center; color:#9b7c55; font-weight:600; font-size:.98rem; }
+  footer .idea{ color:#b45a1b; font-weight:800; }
+  .heart{
+    position:absolute; pointer-events:none; z-index:5;
+    animation:floatUp 1.15s ease-out forwards;
+  }
+  @keyframes floatUp{
+    0%{ transform:translate(-50%,-50%) scale(.5) rotate(0deg); opacity:0; }
+    15%{ opacity:1; }
+    100%{ transform:translate(-50%,-190%) scale(1.15) rotate(var(--spin,10deg)); opacity:0; }
+  }
+  .eye{ transform-box:fill-box; transform-origin:center; animation:blink 4.8s infinite; }
+  @keyframes blink{ 0%,91%,100%{ transform:scaleY(1);} 94%{ transform:scaleY(.08);} 97%{ transform:scaleY(1);} }
+  #breath{ transform-box:fill-box; transform-origin:50% 100%; animation:breath 3.4s ease-in-out infinite alternate; }
+  @keyframes breath{ from{ transform:scale(1,1);} to{ transform:scale(1.012,1.02);} }
+  #head{ transform-box:fill-box; transform-origin:50% 88%; transition:transform .18s ease; transform:rotate(2deg); }
+  .happy-tilt-l #head{ transform:rotate(-4.5deg); }
+  .happy-tilt-r #head{ transform:rotate(4.5deg); }
+  .mouthClosed{ transition:opacity .15s ease; }
+  .happy .mouthClosed{ opacity:0; }
+  #openSmile{ opacity:0; transition:opacity .15s ease; }
+  .happy #openSmile{ opacity:1; }
+  .earL,.earR{ transform-box:fill-box; }
+  .earL{ transform-origin:85% 8%; } .earR{ transform-origin:15% 8%; }
+  .happy .earL{ animation:earWigL .34s ease-in-out 5 alternate; }
+  .happy .earR{ animation:earWigR .34s ease-in-out 5 alternate; }
+  @keyframes earWigL{ from{ transform:rotate(0);} to{ transform:rotate(-4deg);} }
+  @keyframes earWigR{ from{ transform:rotate(0);} to{ transform:rotate(4deg);} }
 </style>
 </head>
 <body>
-  <h1>Teddy Wags <span class="paw">🐾</span></h1>
-  <div id="status" aria-live="polite">Go on, give Teddy a click.</div>
-  <div id="counter">Wags: 0</div>
+<header>
+  <h1><span class="paw">🐾</span> Teddy Wags</h1>
+  <p class="sub">Click Teddy's left and his booty swings left. Click his right, it swings right.</p>
+</header>
+<div id="status" aria-live="polite">Go on, give Teddy a click.</div>
 
-  <div id="stage" role="button" tabindex="0" aria-label="Teddy the cockapoo. Click the left side to shift his booty left, the right side to shift it right.">
-    <svg class="dog" viewBox="0 0 640 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="bodyGrad" gradientUnits="userSpaceOnUse" x1="0" y1="195" x2="0" y2="455">
-          <stop offset="0" stop-color="#f8ead0"/>
-          <stop offset=".45" stop-color="#f2ddae"/>
-          <stop offset=".78" stop-color="#ead09e"/>
-          <stop offset="1" stop-color="#dfbe82"/>
-        </linearGradient>
-        <linearGradient id="headGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fffaf0"/>
-          <stop offset=".6" stop-color="#fdf3da"/>
-          <stop offset="1" stop-color="#f0dbab"/>
-        </linearGradient>
-        <linearGradient id="earGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#f7e6c2"/>
-          <stop offset="1" stop-color="#e6c78f"/>
-        </linearGradient>
-        <linearGradient id="bibGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fffdf6"/>
-          <stop offset="1" stop-color="#f2e3c2"/>
-        </linearGradient>
-        <linearGradient id="muzzleGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fffefb"/>
-          <stop offset="1" stop-color="#f5e9cd"/>
-        </linearGradient>
-        <radialGradient id="tailGrad" cx=".38" cy=".32" r=".85">
-          <stop offset="0" stop-color="#f9ecd2"/>
-          <stop offset="1" stop-color="#e7ca92"/>
-        </radialGradient>
-      </defs>
+<div id="stage" role="button" tabindex="0" aria-label="Play with Teddy. Activate the left side to swing his booty left, the right side to swing it right.">
+<svg class="dog" viewBox="0 0 640 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <pattern id="hound" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect width="18" height="18" fill="#41619b"/>
+      <rect x="0" y="0" width="9" height="9" fill="#f4f7fc"/>
+      <rect x="9" y="9" width="9" height="9" fill="#f4f7fc"/>
+      <rect x="4.5" y="4.5" width="9" height="9" fill="#7e97c4" opacity="0.55"/>
+    </pattern>
+    <radialGradient id="floorG" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e9cf9f"/>
+      <stop offset="100%" stop-color="#e9cf9f" stop-opacity="0"/>
+    </radialGradient>
+    <!-- shared userSpace gradients: overlapping pieces shade continuously, no seams -->
+    <linearGradient id="bodyGrad" gradientUnits="userSpaceOnUse" x1="320" y1="250" x2="320" y2="535">
+      <stop offset="0" stop-color="#f9ecce"/>
+      <stop offset="1" stop-color="#f0d9b0"/>
+    </linearGradient>
+    <radialGradient id="headGrad" gradientUnits="userSpaceOnUse" cx="320" cy="148" r="150">
+      <stop offset="0" stop-color="#fbf0d8"/>
+      <stop offset="1" stop-color="#f2ddb6"/>
+    </radialGradient>
+    <linearGradient id="earGrad" gradientUnits="userSpaceOnUse" x1="0" y1="90" x2="0" y2="300">
+      <stop offset="0" stop-color="#efdcae"/>
+      <stop offset="1" stop-color="#e0c28a"/>
+    </linearGradient>
+    <radialGradient id="muzzleGrad" gradientUnits="userSpaceOnUse" cx="320" cy="212" r="78">
+      <stop offset="0" stop-color="#fffdf6"/>
+      <stop offset="1" stop-color="#fbeed4"/>
+    </radialGradient>
+    <radialGradient id="bibGrad" gradientUnits="userSpaceOnUse" cx="320" cy="410" r="125">
+      <stop offset="0" stop-color="#fffdf6"/>
+      <stop offset="1" stop-color="#fdeed1"/>
+    </radialGradient>
+  </defs>
 
-      <ellipse cx="320" cy="534" rx="228" ry="23" fill="#8a6134" opacity=".14"/>
+  <ellipse cx="320" cy="534" rx="212" ry="32" fill="url(#floorG)"/>
+  <ellipse cx="320" cy="532" rx="172" ry="19" fill="#dfc493" opacity="0.5"/>
 
-      <!-- REAR: back, big round rump, back legs, plume tail. It SHIFTS side to
-           side across center while the front end stays planted. -->
-      <g id="rear">
-        <!-- golden retriever plume tail: long, feathered, flowing off the rump -->
+  <g id="breath">
+    <!-- REAR assembly: swings around the waist (320,330). Front end stays planted. -->
+    <g id="rear">
+      <g id="tailWrap">
         <g id="tail">
-          <path d="M548 288 C580 278 610 250 620 210 C626 186 620 162 602 156 C588 151 578 164 580 180 C584 202 578 224 564 240 C576 246 576 262 564 268 C576 276 570 292 554 292 C562 302 548 306 540 296 Z" fill="url(#tailGrad)" stroke="rgba(186,146,88,.45)" stroke-width="1.5"/>
-          <path d="M566 268 C590 250 604 224 606 196" fill="none" stroke="#e2c184" stroke-width="3" stroke-linecap="round" opacity=".7"/>
-          <path d="M556 282 C574 268 586 246 590 220" fill="none" stroke="#e2c184" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+          <!-- golden retriever plume: long and feathered, flowing up off the haunch -->
+          <path d="M424 456 C472 440 520 402 536 352 C546 322 540 296 522 290 C508 285 498 298 502 316 C506 340 496 366 478 386 C492 392 492 408 478 416 C490 426 484 444 466 448 C474 460 452 468 438 460 Z" fill="url(#bodyGrad)" stroke="rgba(186,146,88,.45)" stroke-width="1.5"/>
+          <path d="M478 420 C506 392 522 356 524 322" fill="none" stroke="rgba(190,150,88,.5)" stroke-width="3" stroke-linecap="round"/>
+          <path d="M462 442 C488 416 502 384 506 348" fill="none" stroke="rgba(190,150,88,.45)" stroke-width="3" stroke-linecap="round"/>
         </g>
-        <!-- far back leg -->
-        <path d="M506 378 L546 378 L544 490 Q544 512 523 512 Q503 512 504 490 Z" fill="#e9d09c"/>
-        <ellipse cx="524" cy="515" rx="25" ry="12" fill="#f3e3c0"/>
-        <!-- back + rump, spanning deep under the chest so no gap opens -->
-        <path d="M285 250 C330 220 400 202 462 208 C524 214 562 252 568 308 C573 356 552 402 508 424 C478 438 448 436 428 442 C412 447 396 436 384 442 C362 450 338 442 330 430 C306 420 288 394 284 350 C281 312 278 272 285 250 Z" fill="url(#bodyGrad)" stroke="rgba(196,158,96,.30)" stroke-width="2"/>
-        <!-- rump shading -->
-        <path d="M548 262 C570 296 572 344 556 384 C568 338 566 296 548 262 Z" fill="rgba(190,150,88,.25)"/>
-        <!-- near back leg with a fluffy skirt over the hip -->
-        <path d="M442 394 C438 434 440 470 442 494 Q443 514 464 514 Q485 514 484 494 L483 396 C471 410 453 410 442 394 Z" fill="url(#bodyGrad)"/>
-        <ellipse cx="463" cy="517" rx="27" ry="13" fill="#f8ecd4"/>
-        <path d="M452 511 v6 M464 513 v6 M476 511 v6" stroke="#dcc08c" stroke-width="2" stroke-linecap="round"/>
       </g>
+      <path d="M320 292 C238 292 204 356 206 428 C208 492 258 530 320 530 C382 530 432 492 434 428 C436 356 402 292 320 292 Z" fill="url(#bodyGrad)"/>
+      <ellipse cx="224" cy="450" rx="44" ry="56" fill="#e8cf9e" opacity="0.35"/>
+      <ellipse cx="416" cy="450" rx="44" ry="56" fill="#e8cf9e" opacity="0.35"/>
+      <ellipse cx="168" cy="520" rx="45" ry="16" fill="#f9edd4" transform="rotate(-14 168 520)"/>
+      <ellipse cx="472" cy="520" rx="45" ry="16" fill="#f9edd4" transform="rotate(14 472 520)"/>
+      <path d="M158 510 l6 9 M176 508 l4 10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+      <path d="M464 508 l-4 10 M482 510 l-6 9" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+    </g>
 
-      <!-- MID: fluff patch over the waist that slides at half the rear's
-           shift, so the body bends like a spine instead of hinging -->
-      <g id="mid">
-        <path d="M282 244 C318 228 348 246 352 296 C355 346 348 400 322 428 C302 446 280 434 275 398 C269 350 270 278 282 244 Z" fill="url(#bodyGrad)"/>
-      </g>
-
-      <!-- FRONT: planted. Chest breathes and shimmies a touch; legs never move. -->
-      <g id="front">
-        <g id="breath">
-          <g id="chest">
-            <path d="M232 300 C220 356 230 410 260 442 C284 468 330 468 352 440 C372 414 374 354 362 310 C350 268 322 250 294 254 C264 258 240 272 232 300 Z" fill="url(#bibGrad)"/>
-            <!-- navy plaid bandana, like his birthday one -->
-            <path d="M230 292 Q296 330 364 290 L357 322 Q297 356 238 324 Z" fill="#274b73"/>
-            <path d="M246 298 L252 332 M284 312 L288 346 M322 310 L324 342 M352 296 L348 328" stroke="rgba(255,255,255,.20)" stroke-width="5"/>
-            <path d="M236 310 Q297 344 360 308" stroke="rgba(140,180,225,.35)" stroke-width="5" fill="none"/>
-            <!-- little white paw print -->
-            <g fill="#ffffff" opacity=".9" transform="rotate(-8 296 322) scale(1.35) translate(-76 -78)">
-              <ellipse cx="296" cy="328" rx="7" ry="5.5"/>
-              <circle cx="286" cy="318" r="3.2"/>
-              <circle cx="293" cy="314.5" r="3.2"/>
-              <circle cx="300" cy="314.5" r="3.2"/>
-              <circle cx="307" cy="318" r="3.2"/>
-            </g>
-            <path d="M348 320 L382 320 L369 368 Q361 378 353 364 Z" fill="#274b73"/>
-            <path d="M356 326 L374 326 M360 344 L370 344" stroke="rgba(255,255,255,.20)" stroke-width="4"/>
-            <circle cx="362" cy="312" r="11" fill="#1e3a5a"/>
-            <circle cx="362" cy="312" r="4.5" fill="#0f2742"/>
-          </g>
+    <!-- FRONT assembly: planted. Chest subgroup gets a tiny lagged counter-sway. -->
+    <g id="front">
+      <g id="chest">
+        <path d="M320 256 C256 256 230 326 233 402 C235 448 248 478 268 490 L372 490 C392 478 405 448 407 402 C410 326 384 256 320 256 Z" fill="url(#bodyGrad)"/>
+        <path d="M320 356 C282 356 263 394 267 434 C270 469 293 494 320 494 C347 494 370 469 373 434 C377 394 358 356 320 356 Z" fill="url(#bibGrad)" opacity="0.95"/>
+        <ellipse cx="320" cy="278" rx="86" ry="17" fill="#dfc28c" opacity="0.4"/>
+        <!-- blue houndstooth bandana -->
+        <path d="M238 288 Q320 332 402 288 L388 322 Q320 442 320 442 Q320 442 252 322 Z" fill="url(#hound)"/>
+        <path d="M238 288 Q320 332 402 288 L388 322 Q320 442 320 442 Q320 442 252 322 Z" fill="none" stroke="#2f4c7c" stroke-width="5" stroke-linejoin="round"/>
+        <g transform="rotate(16 382 318)">
+          <rect x="366" y="300" width="33" height="38" rx="9" fill="#41619b" stroke="#2f4c7c" stroke-width="4"/>
+          <path d="M374 338 l-4 32 M392 338 l6 30" stroke="#41619b" stroke-width="11" stroke-linecap="round"/>
         </g>
-        <!-- front legs: planted, never move -->
-        <path d="M248 414 L288 414 L286 494 Q286 514 268 514 Q250 514 251 494 Z" fill="url(#bibGrad)"/>
-        <ellipse cx="268" cy="517" rx="27" ry="12.5" fill="#fbf1dc"/>
-        <path d="M257 511 v6 M269 513 v6 M280 511 v6" stroke="#e0c892" stroke-width="2" stroke-linecap="round"/>
-        <path d="M310 414 L350 414 L349 494 Q349 514 331 514 Q313 514 314 494 Z" fill="url(#bibGrad)"/>
-        <ellipse cx="331" cy="517" rx="27" ry="12.5" fill="#fbf1dc"/>
-        <path d="M320 511 v6 M332 513 v6 M343 511 v6" stroke="#e0c892" stroke-width="2" stroke-linecap="round"/>
       </g>
+      <!-- front legs + paws: fully static, planted -->
+      <path d="M283 402 v96" stroke="#f9edd4" stroke-width="36" stroke-linecap="round"/>
+      <path d="M357 402 v96" stroke="#f9edd4" stroke-width="36" stroke-linecap="round"/>
+      <ellipse cx="283" cy="514" rx="30" ry="14" fill="#fdf6e7"/>
+      <ellipse cx="357" cy="514" rx="30" ry="14" fill="#fdf6e7"/>
+      <path d="M273 505 v10 M293 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+      <path d="M347 505 v10 M367 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+    </g>
 
-      <!-- HEAD: big, round and front like the photos — the cute anchor.
-           It grows out of the chest through a scalloped ruff. -->
-      <g id="headSway">
-      <g id="head">
-        <!-- neck ruff bridging head and chest -->
-        <path d="M205 240 C148 240 116 266 119 300 C121 324 142 338 166 332 L173 350 L187 336 L205 354 L223 336 L237 350 L244 332 C268 338 289 324 291 300 C294 266 262 240 205 240 Z" fill="url(#bodyGrad)"/>
-        <!-- ears: long, thick, wavy cocker ears -->
-        <g class="earL">
-          <path d="M142 112 C94 120 70 176 74 240 C77 292 88 332 114 342 C140 352 162 330 166 290 C171 242 168 172 158 134 C152 114 154 108 142 112 Z" fill="url(#earGrad)"/>
-          <path d="M128 138 C106 164 98 214 102 264 C104 296 112 318 124 320 C114 268 116 192 128 138 Z" fill="#fbf0d8" opacity=".85"/>
-          <path d="M84 250 q10 12 4 26 M92 292 q10 12 4 24" stroke="#dfc493" stroke-width="4" fill="none" stroke-linecap="round"/>
-        </g>
+    <!-- HEAD -->
+    <g id="headSway">
+    <g id="head">
+      <!-- neck ruff: grows the head into the chest so they read as one dog -->
+      <path d="M320 232 C262 232 234 258 237 292 C239 316 260 330 284 325 L291 343 L305 330 L320 346 L335 330 L349 343 L356 325 C380 330 401 316 403 292 C406 258 378 232 320 232 Z" fill="url(#bodyGrad)"/>
+      <g class="earL">
+        <path d="M248 94 C206 98 187 138 189 195 C190 232 195 262 204 282 L212 268 L219 286 L227 268 L235 284 C241 262 244 232 245 196 C247 160 258 128 263 112 C266 100 260 92 248 94 Z" fill="url(#earGrad)"/>
+        <path d="M233 118 C215 132 207 170 210 212 C212 242 217 260 223 266 C231 248 235 212 236 174 C237 146 237 126 233 118 Z" fill="#f9edd4" opacity="0.75"/>
+      </g>
+      <g transform="translate(640 0) scale(-1 1)">
         <g class="earR">
-          <path d="M268 112 C316 120 340 176 336 240 C333 292 322 332 296 342 C270 352 248 330 244 290 C239 242 242 172 252 134 C258 114 256 108 268 112 Z" fill="url(#earGrad)"/>
-          <path d="M282 138 C304 164 312 214 308 264 C306 296 298 318 286 320 C296 268 294 192 282 138 Z" fill="#fbf0d8" opacity=".85"/>
-          <path d="M326 250 q-10 12 -4 26 M318 292 q-10 12 -4 24" stroke="#dfc493" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M248 94 C206 98 187 138 189 195 C190 232 195 262 204 282 L212 268 L219 286 L227 268 L235 284 C241 262 244 232 245 196 C247 160 258 128 263 112 C266 100 260 92 248 94 Z" fill="url(#earGrad)"/>
+          <path d="M233 118 C215 132 207 170 210 212 C212 242 217 260 223 266 C231 248 235 212 236 174 C237 146 237 126 233 118 Z" fill="#f9edd4" opacity="0.75"/>
         </g>
-        <!-- skull: big and round -->
-        <path d="M205 282 C138 282 92 234 90 172 C88 112 122 66 172 56 C186 44 224 44 238 56 C288 66 322 112 320 172 C318 234 272 282 205 282 Z" fill="url(#headGrad)"/>
-        <!-- tuft -->
-        <path d="M168 62 C176 34 200 24 207 42 C216 22 242 32 248 58 C234 45 224 50 208 48 C192 50 180 47 168 62 Z" fill="#fffaf0"/>
-        <!-- happy brows -->
-        <path class="brow" d="M146 146 Q163 135 182 144" fill="none" stroke="#e3c491" stroke-width="5" stroke-linecap="round"/>
-        <path class="brow" d="M228 144 Q247 135 264 146" fill="none" stroke="#e3c491" stroke-width="5" stroke-linecap="round"/>
-        <!-- big sparkly eyes -->
-        <g class="eye">
-          <circle cx="162" cy="182" r="13.5" fill="#43302a"/>
-          <circle cx="167" cy="176" r="4.6" fill="#ffffff"/>
-          <circle cx="157" cy="188" r="2.2" fill="#ffffff" opacity=".9"/>
-        </g>
-        <g class="eye">
-          <circle cx="248" cy="182" r="13.5" fill="#43302a"/>
-          <circle cx="253" cy="176" r="4.6" fill="#ffffff"/>
-          <circle cx="243" cy="188" r="2.2" fill="#ffffff" opacity=".9"/>
-        </g>
-        <!-- soft blush -->
-        <ellipse cx="128" cy="222" rx="14" ry="8.5" fill="#f6a8a0" opacity=".5"/>
-        <ellipse cx="282" cy="222" rx="14" ry="8.5" fill="#f6a8a0" opacity=".5"/>
-        <!-- beard: one big fluffy ball with a scalloped chin -->
-        <circle cx="171" cy="248" r="26" fill="url(#muzzleGrad)"/>
-        <circle cx="205" cy="256" r="31" fill="url(#muzzleGrad)"/>
-        <circle cx="239" cy="248" r="26" fill="url(#muzzleGrad)"/>
-        <circle cx="182" cy="280" r="13" fill="url(#muzzleGrad)"/>
-        <circle cx="205" cy="284" r="14" fill="url(#muzzleGrad)"/>
-        <circle cx="228" cy="280" r="13" fill="url(#muzzleGrad)"/>
-        <!-- open grin + tongue -->
-        <path class="grin" d="M176 254 Q205 290 234 254 Q228 277 205 279 Q182 277 176 254 Z" fill="#7c4438"/>
-        <g class="tongue">
-          <path d="M192 268 L218 268 L216 296 Q205 306 194 296 Z" fill="#f28bab"/>
-          <path d="M205 272 L205 296" stroke="#dd7291" stroke-width="2" stroke-linecap="round"/>
-        </g>
-        <!-- nose: big and glossy -->
-        <ellipse cx="205" cy="226" rx="20" ry="14.5" fill="#7c4b3a"/>
-        <ellipse cx="205" cy="230" rx="20" ry="11" fill="#96604a"/>
-        <ellipse cx="197" cy="220" rx="7.5" ry="4" fill="#d9a184" opacity=".95" transform="rotate(-18 197 220)"/>
-        <ellipse cx="196" cy="229" rx="3.4" ry="6" fill="#59362a"/>
-        <ellipse cx="214" cy="229" rx="3.4" ry="6" fill="#59362a"/>
-        <path d="M205 239 L205 248" stroke="#b99b78" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- closed smile -->
-        <path class="smile" d="M186 252 Q196 261 205 254 Q214 261 224 252" fill="none" stroke="#a97e5f" stroke-width="3" stroke-linecap="round"/>
       </g>
+      <!-- one-piece skull with the tuft in the silhouette -->
+      <path d="M274 274 C242 254 223 215 222 170 C221 128 240 92 274 74 C281 58 300 50 320 55 C340 50 359 58 366 74 C400 92 419 128 418 170 C417 215 398 254 366 274 Z" fill="url(#headGrad)"/>
+      <ellipse cx="320" cy="108" rx="54" ry="28" fill="#fdf3dd" opacity="0.8"/>
+      <circle cx="240" cy="228" r="20" fill="url(#headGrad)"/>
+      <circle cx="400" cy="228" r="20" fill="url(#headGrad)"/>
+      <ellipse cx="243" cy="205" rx="16" ry="9" fill="#f0b98a" opacity="0.3"/>
+      <ellipse cx="397" cy="205" rx="16" ry="9" fill="#f0b98a" opacity="0.3"/>
+      <ellipse cx="272" cy="126" rx="21" ry="10" fill="#fff6e3" opacity="0.95" transform="rotate(-8 272 126)"/>
+      <ellipse cx="368" cy="126" rx="21" ry="10" fill="#fff6e3" opacity="0.95" transform="rotate(8 368 126)"/>
+      <!-- muzzle + mustache + beard, one shared gradient -->
+      <ellipse cx="320" cy="218" rx="58" ry="43" fill="url(#muzzleGrad)"/>
+      <ellipse cx="287" cy="224" rx="23" ry="14" fill="url(#muzzleGrad)" transform="rotate(-14 287 224)"/>
+      <ellipse cx="353" cy="224" rx="23" ry="14" fill="url(#muzzleGrad)" transform="rotate(14 353 224)"/>
+      <circle cx="291" cy="256" r="15" fill="url(#muzzleGrad)"/>
+      <circle cx="320" cy="265" r="18" fill="url(#muzzleGrad)"/>
+      <circle cx="349" cy="256" r="15" fill="url(#muzzleGrad)"/>
+      <!-- eyes -->
+      <g class="eye">
+        <circle cx="272" cy="150" r="14" fill="#38271c"/>
+        <circle cx="267" cy="144" r="5" fill="#ffffff"/>
+        <circle cx="277" cy="155" r="2.4" fill="#ffffff" opacity="0.9"/>
       </g>
-    </svg>
-  </div>
-  <p class="hint">Click his left or right side and watch that booty shift. Boop the nose at your own risk.</p>
-  <footer>Teddy Wags — Kate's idea 💡 · Built for Ted, the best boy</footer>
+      <g class="eye">
+        <circle cx="368" cy="150" r="14" fill="#38271c"/>
+        <circle cx="363" cy="144" r="5" fill="#ffffff"/>
+        <circle cx="373" cy="155" r="2.4" fill="#ffffff" opacity="0.9"/>
+      </g>
+      <path d="M254 138 Q272 129 290 138 M350 138 Q368 129 386 138" stroke="#e0c48f" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.8"/>
+      <!-- nose (click it for a boop) -->
+      <g id="nose">
+        <ellipse cx="320" cy="194" rx="20" ry="14.5" fill="#62422e"/>
+        <ellipse cx="312" cy="187" rx="7" ry="4.2" fill="#ffffff" opacity="0.55"/>
+        <circle cx="331" cy="190" r="2" fill="#ffffff" opacity="0.35"/>
+        <circle cx="314" cy="198" r="2.4" fill="#452c1c"/>
+        <circle cx="326" cy="198" r="2.4" fill="#452c1c"/>
+      </g>
+      <!-- mouth: closed smile at rest, big open grin when happy -->
+      <path class="mouthClosed" d="M320 208 v7 M320 215 q-10 10 -22 5 M320 215 q10 10 22 5" stroke="#8a6a4d" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <g id="openSmile">
+        <path d="M295 212 Q320 224 345 212 Q342 244 320 244 Q298 244 295 212 Z" fill="#7c4634"/>
+        <path d="M306 232 h28 v12 q0 13 -14 13 q-14 0 -14 -13 Z" fill="#f28ba8"/>
+        <path d="M320 238 v12" stroke="#dd6d8f" stroke-width="3" stroke-linecap="round"/>
+      </g>
+    </g>
+    </g>
+  </g>
+</svg>
+</div>
+
+<div class="hint"><span>← booty left</span><span>booty right →</span></div>
+<div id="counter">Wags: 0</div>
+
+<footer>
+  <p><span class="idea">Kate's idea.</span> Built for Teddy, a very good cockapoo with one very waggy tail.</p>
+</footer>
 
 <script>
 (function(){
   var stage = document.getElementById('stage');
-  var counter = document.getElementById('counter');
-  var status = document.getElementById('status');
+  var tailWrap = document.getElementById('tailWrap');
+  var tail = document.getElementById('tail');
   var rear = document.getElementById('rear');
-  var mid = document.getElementById('mid');
   var chest = document.getElementById('chest');
   var headSway = document.getElementById('headSway');
-  var tail = document.getElementById('tail');
-
-  var msgs = {
-    left:  ['Booty shifted left!', 'That back end slid left.', 'Left with the whole rear end!', 'Wiggle-butt, stage left.'],
-    right: ['Booty shifted right!', 'That back end slid right.', 'Right with the whole rear end!', 'Wiggle-butt, stage right.'],
-    boop:  ['Boop! The whole back end went off.', 'Nose booped. Booty: activated.', 'Boop! Maximum wiggle.']
-  };
+  var status = document.getElementById('status');
+  var counter = document.getElementById('counter');
   var wags = 0;
   var TAU = Math.PI * 2;
-  // Continuous simulation: the phase never resets and everything eases
-  // toward its target, so switching sides mid-wiggle glides. The rear end
-  // SHIFTS side to side ACROSS CENTER (only a whisper of bias toward the
-  // clicked side) while the front stays planted.
-  // targetSide: +1 = clicked left, -1 = clicked right.
-  var phase = 0, amp = 0, lean = 0;
+  // Continuous wag simulation: the phase never resets and every part eases
+  // toward its target, so switching sides mid-wag glides instead of snapping.
+  // targetSide is the lean target: +1 = booty left, -1 = booty right.
+  // The tail target is the opposite sign (scaleX +1 draws it on the right).
+  var phase = 0, amp = 0, lean = 0, tailSide = 1;
   var targetSide = -1, excitedUntil = 0, lastFrame = 0, loopRunning = false;
 
-  function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+  var msgs = {
+    left:  ["Booty swings left!", "Teddy wags left!", "Full wiggle, left side!", "That booty is swinging left."],
+    right: ["Booty swings right!", "Teddy wags right!", "Full wiggle, right side!", "That booty is swinging right."],
+    boop:  ["Boop! Right on the nose.", "Boop achieved. Teddy approves.", "A perfect boop."]
+  };
+  function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
 
   function frame(now){
     var dt = Math.min(64, now - (lastFrame || now));
@@ -274,24 +269,21 @@
     amp += (ampTarget - amp) * (1 - Math.exp(-dt / tau));
     if(!excited && amp < 0.003) amp = 0;
     lean += (targetSide - lean) * (1 - Math.exp(-dt / 170));
-    phase += dt * TAU / 440;
+    tailSide += ((-targetSide) - tailSide) * (1 - Math.exp(-dt / 150));
+    phase += dt * TAU / 460;
 
-    var dx = amp * (-lean * 2.5 + 14.5 * Math.sin(phase));
-    var dy = amp * 1.8 * Math.sin(phase + 0.6);
-    var rearRot = amp * 3 * Math.sin(phase + 0.35);
-    rear.setAttribute('transform',
-      'translate(' + dx.toFixed(2) + ' ' + dy.toFixed(2) + ') rotate(' + rearRot.toFixed(2) + ' 330 320)');
-    // waist patch slides at half rate — the spine bends, it doesn't hinge
-    mid.setAttribute('transform', 'translate(' + (dx * 0.5).toFixed(2) + ' 0)');
-    // plume tail streams off the rump and sways as he shifts
+    // The booty FLIPS to the clicked side: the rear swings around the waist,
+    // biased toward that side, while the tail glides across behind him.
+    var rearAngle = amp * (lean * 5 + 7 * Math.sin(phase));
+    rear.setAttribute('transform', rearAngle ? 'rotate(' + rearAngle.toFixed(2) + ' 320 330)' : '');
     var tailAngle = amp * (-8 + 14 * Math.sin(2 * phase - 0.9));
-    tail.setAttribute('transform', 'rotate(' + tailAngle.toFixed(2) + ' 548 262)');
-    // chest shimmy: tiny, opposite, lagged — front stays planted
-    var chestAngle = -amp * 1.8 * Math.sin(phase - 0.7);
-    chest.setAttribute('transform', chestAngle ? 'rotate(' + chestAngle.toFixed(2) + ' 296 320)' : '');
-    // head follows last, barely
-    var headAngle = amp * 1.1 * Math.sin(phase - 1.2);
-    headSway.setAttribute('transform', headAngle ? 'rotate(' + headAngle.toFixed(2) + ' 205 235)' : '');
+    tail.setAttribute('transform', 'rotate(' + tailAngle.toFixed(2) + ' 430 452)');
+    // easing scaleX through 0 swings the tail behind his body to the other side
+    tailWrap.setAttribute('transform', 'translate(320 0) scale(' + tailSide.toFixed(3) + ' 1) translate(-320 0)');
+    var chestAngle = -amp * 2.1 * Math.sin(phase - 0.7);
+    chest.setAttribute('transform', chestAngle ? 'rotate(' + chestAngle.toFixed(2) + ' 320 300)' : '');
+    var headAngle = amp * 1.2 * Math.sin(phase - 1.2);
+    headSway.setAttribute('transform', headAngle ? 'rotate(' + headAngle.toFixed(2) + ' 320 250)' : '');
 
     if(amp > 0.12 || excited){
       if(!stage.classList.contains('happy')){
@@ -301,13 +293,13 @@
       stage.classList.remove('happy','happy-tilt-l','happy-tilt-r');
     }
 
-    var settled = !excited && amp === 0 && Math.abs(lean - targetSide) < 0.002;
+    var settled = !excited && amp === 0 &&
+      Math.abs(lean - targetSide) < 0.002 && Math.abs(tailSide + targetSide) < 0.002;
     if(!settled){
       requestAnimationFrame(frame);
     } else {
       loopRunning = false;
       rear.setAttribute('transform', '');
-      mid.setAttribute('transform', '');
       chest.setAttribute('transform', '');
       headSway.setAttribute('transform', '');
       tail.setAttribute('transform', '');
@@ -319,27 +311,24 @@
   }
 
   function hearts(x, y, n){
-    var rect = stage.getBoundingClientRect();
     for(var i = 0; i < n; i++){
-      var el = document.createElement('div');
-      el.className = 'heart';
-      el.textContent = '💗';
-      var spread = 90;
-      el.style.left = (x - rect.left + (Math.random() * spread - spread / 2)) + 'px';
-      el.style.top = (y - rect.top + (Math.random() * 26 - 13)) + 'px';
-      el.style.fontSize = (15 + Math.random() * 15) + 'px';
-      el.style.setProperty('--dx', (Math.random() * 70 - 35) + 'px');
-      el.style.setProperty('--rot', (Math.random() * 44 - 22) + 'deg');
-      el.style.animationDelay = (Math.random() * 0.18) + 's';
-      stage.appendChild(el);
-      (function(node){ setTimeout(function(){ node.remove(); }, 1600); })(el);
+      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      s.setAttribute('viewBox','0 0 24 24');
+      s.innerHTML = '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#ef7d9b"/>';
+      s.classList.add('heart');
+      var size = 16 + Math.random() * 16;
+      s.style.width = size + 'px'; s.style.height = size + 'px';
+      s.style.left = (x + (Math.random() * 90 - 45)) + 'px';
+      s.style.top = (y + (Math.random() * 30 - 15)) + 'px';
+      s.style.setProperty('--spin', (Math.random() * 36 - 18) + 'deg');
+      stage.appendChild(s);
+      (function(el){ setTimeout(function(){ el.remove(); }, 1250); })(s);
     }
   }
 
   function doWag(side, x, y, isBoop){
     wags++;
     counter.textContent = 'Wags: ' + wags;
-    counter.style.visibility = 'visible';
     status.textContent = isBoop ? pick(msgs.boop) : pick(msgs[side]);
     targetSide = side === 'left' ? 1 : -1;
     excitedUntil = performance.now() + 2100;
@@ -350,25 +339,23 @@
   }
 
   var lastPointerAt = 0;
-  stage.addEventListener('pointerdown', function(ev){
+  stage.addEventListener('pointerdown', function(e){
     var nowMs = performance.now();
     if(nowMs - lastPointerAt < 120) return;
     lastPointerAt = nowMs;
-    var rect = stage.getBoundingClientRect();
-    var x = ev.clientX - rect.left, y = ev.clientY - rect.top;
-    var nx = x / rect.width, ny = y / rect.height;
-    // his nose, in stage fractions (head front-left in this stance)
-    var isBoop = Math.abs(nx - 0.320) < 0.055 && Math.abs(ny - 0.377) < 0.05;
-    var side = nx < 0.5 ? 'left' : 'right';
-    doWag(side, ev.clientX, ev.clientY, isBoop);
+    var r = stage.getBoundingClientRect();
+    var x = e.clientX - r.left, y = e.clientY - r.top;
+    var tg = e.target;
+    var isBoop = tg && tg.closest && !!tg.closest('#nose');
+    var side = x < r.width / 2 ? 'left' : 'right';
+    doWag(side, x, y, isBoop);
   });
 
-  stage.addEventListener('keydown', function(ev){
-    if(ev.key === 'ArrowLeft'){ doWag('left', 0, 0, false); ev.preventDefault(); }
-    else if(ev.key === 'ArrowRight'){ doWag('right', 0, 0, false); ev.preventDefault(); }
-    else if(ev.key === 'Enter' || ev.key === ' '){
-      doWag(Math.random() < 0.5 ? 'left' : 'right', 0, 0, false); ev.preventDefault();
-    }
+  stage.addEventListener('keydown', function(e){
+    var r = stage.getBoundingClientRect();
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); doWag('left', r.width * 0.3, r.height * 0.4, false); }
+    if(e.key === 'ArrowRight'){ e.preventDefault(); doWag('right', r.width * 0.7, r.height * 0.4, false); }
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); doWag(Math.random() < 0.5 ? 'left' : 'right', r.width / 2, r.height * 0.4, false); }
   });
 })();
 </script>
