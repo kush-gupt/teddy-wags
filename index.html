@@ -62,11 +62,13 @@
   #dogBounce{ transform-box:fill-box; transform-origin:50% 100%; }
   .happy #dogBounce{ animation:bounce .38s ease-in-out 5; }
   @keyframes bounce{ 0%,100%{ transform:translateY(0);} 35%{ transform:translateY(-10px);} 70%{ transform:translateY(1px);} }
-  #head{ transform-box:fill-box; transform-origin:50% 88%; transition:transform .18s ease; }
-  .happy-tilt-l #head{ transform:rotate(-5deg); }
-  .happy-tilt-r #head{ transform:rotate(5deg); }
-  #tongue{ transform-box:fill-box; transform-origin:50% 0%; transform:scaleY(0); transition:transform .16s ease; }
-  .happy #tongue{ transform:scaleY(1); }
+  #head{ transform-box:fill-box; transform-origin:50% 88%; transition:transform .18s ease; transform:rotate(2deg); }
+  .happy-tilt-l #head{ transform:rotate(-6deg); }
+  .happy-tilt-r #head{ transform:rotate(6deg); }
+  .mouthClosed{ transition:opacity .15s ease; }
+  .happy .mouthClosed{ opacity:0; }
+  #openSmile{ opacity:0; transition:opacity .15s ease; }
+  .happy #openSmile{ opacity:1; }
   .earL,.earR{ transform-box:fill-box; }
   .earL{ transform-origin:85% 8%; } .earR{ transform-origin:15% 8%; }
   .happy .earL{ animation:earWigL .3s ease-in-out 6 alternate; }
@@ -102,6 +104,7 @@
 
   <g id="dogBounce">
   <g id="breath">
+  <g id="booty">
     <!-- ONE tail: a fluffy plume curled beside his haunch. The wrapper flips it to the clicked side. -->
     <g id="tailFlip">
       <g id="tail" transform="rotate(6 418 470)">
@@ -147,17 +150,21 @@
     <path d="M273 505 v10 M293 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
     <path d="M347 505 v10 M367 505 v10" stroke="#dfc493" stroke-width="3.5" stroke-linecap="round"/>
 
+  </g>
+
     <!-- head -->
     <g id="head">
       <!-- ears: one drawn, one mirrored for symmetry -->
       <g class="earL">
         <path d="M248 94 C206 98 187 138 189 195 C190 240 197 284 212 298 C228 312 242 288 245 238 C248 196 260 148 264 120 C266 102 262 92 248 94 Z" fill="#ecd7ab"/>
+        <path d="M233 118 C215 132 207 170 210 212 C212 242 217 260 223 266 C231 248 235 212 236 174 C237 146 237 126 233 118 Z" fill="#f9edd4" opacity="0.8"/>
         <path d="M222 128 C206 148 201 190 205 236 C207 262 212 278 218 284" stroke="#dec188" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.85"/>
         <path d="M196 250 q8 10 20 12 M200 272 q8 8 18 9" stroke="#dec188" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7"/>
       </g>
       <g transform="translate(640 0) scale(-1 1)">
         <g class="earR">
           <path d="M248 94 C206 98 187 138 189 195 C190 240 197 284 212 298 C228 312 242 288 245 238 C248 196 260 148 264 120 C266 102 262 92 248 94 Z" fill="#ecd7ab"/>
+          <path d="M233 118 C215 132 207 170 210 212 C212 242 217 260 223 266 C231 248 235 212 236 174 C237 146 237 126 233 118 Z" fill="#f9edd4" opacity="0.8"/>
           <path d="M222 128 C206 148 201 190 205 236 C207 262 212 278 218 284" stroke="#dec188" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.85"/>
           <path d="M196 250 q8 10 20 12 M200 272 q8 8 18 9" stroke="#dec188" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7"/>
         </g>
@@ -170,8 +177,10 @@
       <circle cx="358" cy="70" r="20" fill="#f5e3c0"/>
       <ellipse cx="320" cy="106" rx="56" ry="30" fill="#fdf3dd" opacity="0.85"/>
       <!-- cheek fluff -->
-      <circle cx="240" cy="228" r="17" fill="#f5e3c0"/>
-      <circle cx="400" cy="228" r="17" fill="#f5e3c0"/>
+      <circle cx="240" cy="228" r="20" fill="#f5e3c0"/>
+      <circle cx="400" cy="228" r="20" fill="#f5e3c0"/>
+      <ellipse cx="243" cy="205" rx="16" ry="9" fill="#f0b98a" opacity="0.35"/>
+      <ellipse cx="397" cy="205" rx="16" ry="9" fill="#f0b98a" opacity="0.35"/>
       <!-- brow tufts -->
       <ellipse cx="272" cy="126" rx="21" ry="10" fill="#fff6e3" opacity="0.95" transform="rotate(-8 272 126)"/>
       <ellipse cx="368" cy="126" rx="21" ry="10" fill="#fff6e3" opacity="0.95" transform="rotate(8 368 126)"/>
@@ -184,28 +193,30 @@
       <circle cx="349" cy="250" r="15" fill="#fffaf0"/>
       <!-- eyes -->
       <g class="eye">
-        <circle cx="272" cy="150" r="11.5" fill="#38271c"/>
-        <circle cx="268" cy="145" r="3.8" fill="#ffffff"/>
-        <circle cx="276" cy="154" r="1.8" fill="#ffffff" opacity="0.9"/>
+        <circle cx="272" cy="150" r="14" fill="#38271c"/>
+        <circle cx="267" cy="144" r="5" fill="#ffffff"/>
+        <circle cx="277" cy="155" r="2.4" fill="#ffffff" opacity="0.9"/>
       </g>
       <g class="eye">
-        <circle cx="368" cy="150" r="11.5" fill="#38271c"/>
-        <circle cx="364" cy="145" r="3.8" fill="#ffffff"/>
-        <circle cx="372" cy="154" r="1.8" fill="#ffffff" opacity="0.9"/>
+        <circle cx="368" cy="150" r="14" fill="#38271c"/>
+        <circle cx="363" cy="144" r="5" fill="#ffffff"/>
+        <circle cx="373" cy="155" r="2.4" fill="#ffffff" opacity="0.9"/>
       </g>
       <path d="M254 138 Q272 129 290 138 M350 138 Q368 129 386 138" stroke="#e0c48f" stroke-width="5" stroke-linecap="round" fill="none"/>
       <!-- nose (click it for a boop) -->
       <g id="nose">
-        <ellipse cx="320" cy="194" rx="18" ry="13" fill="#62422e"/>
-        <ellipse cx="313" cy="188" rx="6" ry="3.6" fill="#ffffff" opacity="0.5"/>
-        <circle cx="314" cy="197" r="2.2" fill="#452c1c"/>
-        <circle cx="326" cy="197" r="2.2" fill="#452c1c"/>
+        <ellipse cx="320" cy="194" rx="20" ry="14.5" fill="#62422e"/>
+        <ellipse cx="312" cy="187" rx="7" ry="4.2" fill="#ffffff" opacity="0.55"/>
+        <circle cx="331" cy="190" r="2" fill="#ffffff" opacity="0.35"/>
+        <circle cx="314" cy="198" r="2.4" fill="#452c1c"/>
+        <circle cx="326" cy="198" r="2.4" fill="#452c1c"/>
       </g>
-      <!-- mouth + tongue -->
-      <path d="M320 207 v8 M320 215 q-10 10 -22 5 M320 215 q10 10 22 5" stroke="#8a6a4d" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-      <g id="tongue">
-        <path d="M307 224 h26 v15 q0 13 -13 13 q-13 0 -13 -13 Z" fill="#f28ba8"/>
-        <path d="M320 230 v14" stroke="#dd6d8f" stroke-width="3" stroke-linecap="round"/>
+      <!-- mouth: closed smile at rest, big open grin when happy -->
+      <path class="mouthClosed" d="M320 208 v7 M320 215 q-10 10 -22 5 M320 215 q10 10 22 5" stroke="#8a6a4d" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <g id="openSmile">
+        <path d="M295 212 Q320 224 345 212 Q342 244 320 244 Q298 244 295 212 Z" fill="#7c4634"/>
+        <path d="M306 232 h28 v12 q0 13 -14 13 q-14 0 -14 -13 Z" fill="#f28ba8"/>
+        <path d="M320 238 v12" stroke="#dd6d8f" stroke-width="3" stroke-linecap="round"/>
       </g>
     </g>
   </g>
@@ -225,6 +236,7 @@
   var stage = document.getElementById('stage');
   var tailFlip = document.getElementById('tailFlip');
   var tail = document.getElementById('tail');
+  var booty = document.getElementById('booty');
   var status = document.getElementById('status');
   var counter = document.getElementById('counter');
   var wags = 0;
@@ -233,8 +245,8 @@
   var REST = 6;
 
   var msgs = {
-    left:  ["Teddy wags left!", "The tail swings left!", "Wagging left for you!", "Left side, full wag."],
-    right: ["Teddy wags right!", "The tail swings right!", "Wagging right for you!", "Right side, full wag."],
+    left:  ["Booty swings left!", "Teddy wags left!", "Full wiggle, left side!", "That booty is swinging left."],
+    right: ["Booty swings right!", "Teddy wags right!", "Full wiggle, right side!", "That booty is swinging right."],
     boop:  ["Boop! Right on the nose.", "Boop achieved. Teddy approves.", "A perfect boop."]
   };
   function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
@@ -248,12 +260,18 @@
     var t = (now - wag.start) / DURATION;
     if(t >= 1){
       setTail(REST);
+      booty.setAttribute('transform', '');
       stage.classList.remove('happy','happy-tilt-l','happy-tilt-r');
       wag = null; return;
     }
     var env = Math.pow(1 - t, 0.55) * Math.min(1, t / 0.08 + 0.25);
     var angle = REST - 16 * env + Math.sin((now - wag.start) / 52) * 24 * env;
     setTail(angle);
+    // the dramatic booty swing: whole rear end sways around the shoulders,
+    // biased hard toward the clicked side
+    var sign = wag.side === 'left' ? 1 : -1;
+    var bAngle = sign * env * (7 + 8.5 * Math.sin((now - wag.start) / 95));
+    booty.setAttribute('transform', 'rotate(' + bAngle.toFixed(2) + ' 320 300)');
     requestAnimationFrame(frame);
   }
 
