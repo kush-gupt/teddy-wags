@@ -106,17 +106,17 @@
   <!-- tails (behind body): fluffy docked pom-poms that swing out on their side -->
   <g id="tailL" transform="rotate(14 238 440)">
     <path d="M238 440 Q178 448 148 416" stroke="#f7e8cb" stroke-width="34" stroke-linecap="round" fill="none"/>
-    <circle cx="146" cy="414" r="27" fill="#f7e8cb"/>
-    <circle cx="128" cy="402" r="19" fill="#fdf3dd"/>
-    <circle cx="160" cy="394" r="16" fill="#fdf3dd"/>
-    <circle cx="136" cy="428" r="15" fill="#f1deb6"/>
+    <circle cx="146" cy="414" r="27" fill="#f7e8cb" stroke="#e6cf9e" stroke-width="2.5"/>
+    <circle cx="128" cy="402" r="19" fill="#fdf3dd" stroke="#e6cf9e" stroke-width="2"/>
+    <circle cx="160" cy="394" r="16" fill="#fdf3dd" stroke="#e6cf9e" stroke-width="2"/>
+    <circle cx="136" cy="428" r="15" fill="#f1deb6" stroke="#e6cf9e" stroke-width="2"/>
   </g>
   <g id="tailR" transform="rotate(-14 402 440)">
     <path d="M402 440 Q462 448 492 416" stroke="#f7e8cb" stroke-width="34" stroke-linecap="round" fill="none"/>
-    <circle cx="494" cy="414" r="27" fill="#f7e8cb"/>
-    <circle cx="512" cy="402" r="19" fill="#fdf3dd"/>
-    <circle cx="480" cy="394" r="16" fill="#fdf3dd"/>
-    <circle cx="504" cy="428" r="15" fill="#f1deb6"/>
+    <circle cx="494" cy="414" r="27" fill="#f7e8cb" stroke="#e6cf9e" stroke-width="2.5"/>
+    <circle cx="512" cy="402" r="19" fill="#fdf3dd" stroke="#e6cf9e" stroke-width="2"/>
+    <circle cx="480" cy="394" r="16" fill="#fdf3dd" stroke="#e6cf9e" stroke-width="2"/>
+    <circle cx="504" cy="428" r="15" fill="#f1deb6" stroke="#e6cf9e" stroke-width="2"/>
   </g>
 
   <g id="dogBounce">
@@ -245,12 +245,12 @@
       wag = null; return;
     }
     var env = Math.pow(1 - t, 0.55) * Math.min(1, t / 0.08 + 0.25);
-    var osc = Math.sin((now - wag.start) / 52) * 17 * env;
+    var osc = Math.sin((now - wag.start) / 52) * 25 * env;
     if(wag.side === 'left'){
-      setTail(tailL, -(8 + 10 * env) + osc, 238);
+      setTail(tailL, -(16 + 13 * env) + osc, 238);
       setTail(tailR, -14, 402);
     } else {
-      setTail(tailR, (8 + 10 * env) - osc, 402);
+      setTail(tailR, (16 + 13 * env) - osc, 402);
       setTail(tailL, 14, 238);
     }
     requestAnimationFrame(frame);
@@ -284,7 +284,11 @@
     requestAnimationFrame(frame);
   }
 
+  var lastPointerAt = 0;
   stage.addEventListener('pointerdown', function(e){
+    var nowMs = performance.now();
+    if(nowMs - lastPointerAt < 120) return; // swallow synthetic double-fires
+    lastPointerAt = nowMs;
     var r = stage.getBoundingClientRect();
     var x = e.clientX - r.left, y = e.clientY - r.top;
     var tg = e.target;
